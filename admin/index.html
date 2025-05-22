@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title>Content Manager</title>
-    <script src="https://unpkg.com/netlify-cms@^2.10.192/dist/netlify-cms.js"></script>
+    <meta charset="utf-8" />
+    <title>Netlify CMS</title>
+    <script src="https://unpkg.com/netlify-cms-app@2.15.72/dist/netlify-cms-app.js"></script>
   </head>
-  <body></body>
+  <body>
+    <script>
+      window.CMS_MANUAL_INIT = true;
+      NetlifyCmsApp.init({
+        config: "/admin/config.yml"
+      });
+    </script>
+  </body>
 </html>
