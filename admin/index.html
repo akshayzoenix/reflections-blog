@@ -10,9 +10,12 @@
 
     <script src="https://unpkg.com/netlify-cms-app@2.15.72/dist/netlify-cms-app.js"></script>
     <script>
-      window.CMS_MANUAL_INIT = true;
+      // This tells Netlify CMS to wait for manual initialization via NetlifyCmsApp.init()
+      window.CMS_MANUAL_INIT = true; 
+      
+      // Initialize Netlify CMS, pointing to your config.yml file.
       NetlifyCmsApp.init({
-        config: "/admin/config.yml"
+        config: "/admin/config.yml" 
       });
     </script>
   </body>
