@@ -7,5 +7,12 @@
   </head>
   <body>
     <div id="nc-root"></div>
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        if (!document.getElementById("nc-root")) {
+          console.error("Netlify CMS mount point #nc-root is missing.");
+        }
+      });
+    </script>
   </body>
 </html>
