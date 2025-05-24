@@ -1,6 +1,7 @@
 backend:
-  name: git-gateway
-  branch: main # Double-check this matches your repository's default branch
+  name: github
+  repo: akshayzoenix/reflections-blog
+  branch: main
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
@@ -14,5 +15,4 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
-      - { label: "Tags", name: "tags", widget: "list", required: false }
       - { label: "Body", name: "body", widget: "markdown" }
