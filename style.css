@@ -1,5 +1,4 @@
-/* Your existing CSS remains here (unchanged) */
-
+/* Base body styles */
 body {
   margin: 0;
   padding: 0;
@@ -7,6 +6,7 @@ body {
   background: #fdfaf5;
   color: #1a1a1a;
   line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 header {
@@ -18,7 +18,6 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; /* Allow nav items to wrap on small screens */
 }
 
 nav ul {
@@ -41,6 +40,7 @@ nav h1 {
 
 main {
   display: flex;
+  flex-direction: row;
   max-width: 1200px;
   margin: 2rem auto;
   padding: 0 2rem;
@@ -94,60 +94,70 @@ article h2 {
   margin-bottom: 0.5rem;
   font-family: inherit;
   font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .subscribe button {
   background: #1a1a1a;
   color: #fff;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.2rem;
   border: none;
   cursor: pointer;
   font-family: inherit;
   font-size: 1rem;
+  border-radius: 6px;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* -----------------------------
-   Responsive breakpoints added 
------------------------------ */
+.subscribe button:hover {
+  background: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
 
-/* For tablets and below (max width 900px) */
-@media (max-width: 900px) {
+.subscribe button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  background: #1a1a1a;
+  color: #fdfaf5;
+}
+
+body.dark-mode nav a {
+  color: #fdfaf5;
+}
+
+body.dark-mode .meta {
+  color: #bbb;
+}
+
+body.dark-mode .subscribe input {
+  background: #333;
+  color: #fdfaf5;
+  border: 1px solid #555;
+}
+
+body.dark-mode .subscribe button {
+  background: #fdfaf5;
+  color: #1a1a1a;
+}
+
+body.dark-mode .subscribe button:hover {
+  background: #ddd;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
   main {
     flex-direction: column;
   }
-  aside {
-    order: -1; /* Move sidebar above main content if desired */
-    margin-bottom: 2rem;
-  }
-}
 
-/* For mobile devices (max width 600px) */
-@media (max-width: 600px) {
-  nav {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
   nav ul {
     flex-direction: column;
-    width: 100%;
     gap: 0.5rem;
-  }
-  
-  nav h1 {
-    font-size: 1.6rem;
-  }
-  
-  main {
-    padding: 0 1rem;
-  }
-
-  article h2 {
-    font-size: 1.5rem;
-  }
-  
-  .subscribe input,
-  .subscribe button {
-    font-size: 0.95rem;
   }
 }
