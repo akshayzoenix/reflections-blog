@@ -5,82 +5,140 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Reflections</title>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
-
-  <header>
-    <h1>Reflections</h1>
-    <nav role="navigation" aria-label="Main navigation">
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Posts</a></li>
-        <li><a href="#">Tags</a></li>
-        <li><a href="#">Newsletter</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-    <div class="posts">
-      <img
-        src="https://images.unsplash.com/photo-1506744038136-46273834b3fb"
-        class="main-image"
-        alt="Cosmos"
-      />
-      <article class="post">
-        <h2>Contemplations of the Cosmos</h2>
-        <p class="meta">April 12, 2024 · Cosmology</p>
-        <p class="description">
-          A journey through the stars and the mysteries of the universe, pondering our place within the vast cosmos.
-        </p>
-      </article>
-      <article class="post">
-        <h2>The Philosophy of Existence</h2>
-        <p class="meta">April 5, 2024 · Philosophy</p>
-        <p class="description">
-          Exploring timeless questions of being, consciousness, and the nature of reality.
-        </p>
-      </article>
-      <article class="post">
-        <h2>रात की गज़लें</h2>
-        <p class="meta">March 28, 2024 · Shayari</p>
-        <p class="description">अपने मर नह गये में ललें है जो बदलव होंगे, अंबर परें मसरर सनामें</p>
-      </article>
-      <article class="post">
-        <h2>Musings on Solitude</h2>
-        <p class="meta">March 20, 2024 · Wisdom</p>
-        <p class="description">Thoughts on the quiet comfort and challenges of being alone in a noisy world.</p>
-      </article>
-    </div>
-
-    <aside class="sidebar">
-      <section class="tags">
-        <h3>Tags</h3>
-        <a href="#">Philosophy</a>
-        <a href="#">Cosmology</a>
-        <a href="#">Shayari</a>
-        <a href="#">Wisdom</a>
-      </section>
-      <section class="subscribe">
-        <h3>Subscribe</h3>
-        <p>Get the latest posts delivered straight to your inbox</p>
-        <input type="email" placeholder="Email address" />
-        <button>Subscribe</button>
-      </section>
-    </aside>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Soch Se Shabd Tak</p>
-  </footer>
-
-  <script>
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark-mode");
+  <style>
+    body {
+      font-family: 'EB Garamond', serif;
+      margin: 0;
+      padding: 0;
+      background: #fdfaf5;
+      color: #111;
+      transition: background 0.3s, color 0.3s;
     }
-  </script>
-</body>
-</html>
+    header, footer {
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    nav a {
+      text-decoration: none;
+      color: #333;
+      outline-offset: 2px;
+    }
+    nav a:hover,
+    nav a:focus-visible {
+      color: #6a4c93;
+      outline: 2px solid #6a4c93;
+      outline-offset: 2px;
+      text-decoration: underline;
+    }
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 1100px;
+      margin: 3rem auto;
+      gap: 2rem;
+      padding: 0 1rem;
+    }
+    .posts {
+      flex: 3 1 100%;
+    }
+    .sidebar {
+      flex: 1 1 100%;
+    }
+    @media (min-width: 768px) {
+      .posts {
+        flex: 3 1 0%;
+      }
+      .sidebar {
+        flex: 1 1 0%;
+      }
+    }
+    .post {
+      margin-bottom: 2.5rem;
+    }
+    .post h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    .post p.meta {
+      color: #555;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    .post p.description {
+      font-size: 1.1rem;
+    }
+    .sidebar h3 {
+      margin-top: 0;
+    }
+    .tags a {
+      display: inline-block;
+      margin: 0.2rem;
+      padding: 0.3rem 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    .subscribe input[type="email"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      font-family: inherit;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .subscribe input[type="email"]:focus {
+      outline: 2px solid #6a4c93;
+      outline-offset: 2px;
+      border-color: #6a4c93;
+    }
+    .subscribe button {
+      width: 100%;
+      padding: 0.6rem;
+      background: #222;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.3s, transform 0.2s;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    .subscribe button:hover,
+    .subscribe button:focus-visible {
+      background: #444;
+      transform: scale(1.05);
+      outline: none;
+    }
+    img.hero {
+      width: 100%;
+      height: auto;
+      margin-bottom: 2rem;
+      border-radius: 6px;
+    }
+    /* Dark Mode */
+    body.dark-mode {
+      background: #111;
+      color: #fdfaf5;
+    }
+    body.dark-mode nav a,
+    body.dark-mode .tags a {
+      color: #fdfaf5;
+    }
+    body.dark-mode header, body.dark-mode footer {
+      border-bottom: 1px solid #555;
+    }
+    body.dark-mode .subscribe b
