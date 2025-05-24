@@ -5,11 +5,96 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reflections</title>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css"> <!-- External CSS -->
+  <style>
+    body {
+      font-family: 'EB Garamond', serif;
+      margin: 0;
+      padding: 0;
+      background: #fdfaf5;
+      color: #111;
+    }
+    header, footer {
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    nav a {
+      text-decoration: none;
+      color: #333;
+    }
+    main {
+      display: flex;
+      max-width: 1100px;
+      margin: 3rem auto;
+      gap: 2rem;
+      padding: 0 1rem;
+    }
+    .posts {
+      flex: 3;
+    }
+    .sidebar {
+      flex: 1;
+    }
+    .post {
+      margin-bottom: 2.5rem;
+    }
+    .post h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    .post p.meta {
+      color: #555;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    .post p.description {
+      font-size: 1.1rem;
+    }
+    .sidebar h3 {
+      margin-top: 0;
+    }
+    .tags a {
+      display: inline-block;
+      margin: 0.2rem;
+      padding: 0.3rem 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    .subscribe input[type="email"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      font-family: inherit;
+    }
+    .subscribe button {
+      width: 100%;
+      padding: 0.5rem;
+      background: #222;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    img.hero {
+      width: 100%;
+      height: auto;
+      margin-bottom: 2rem;
+    }
+  </style>
 </head>
 <body>
-  <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
-
   <header>
     <h1>Reflections</h1>
     <nav>
@@ -20,7 +105,6 @@
       <a href="#">Newsletter</a>
     </nav>
   </header>
-
   <main>
     <div class="posts">
       <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" class="hero" alt="Cosmos">
@@ -45,7 +129,6 @@
         <p class="description">Thoughts on the quiet comfort and challenges of being alone in a noisy world.</p>
       </div>
     </div>
-
     <div class="sidebar">
       <div class="tags">
         <h3>Tags</h3>
@@ -58,19 +141,13 @@
         <h3>Subscribe</h3>
         <p>Get the latest posts delivered straight to your inbox</p>
         <input type="email" placeholder="Email address">
-        <button class="button">Subscribe</button>
+        <button>Subscribe</button>
       </div>
     </div>
   </main>
-
   <footer>
     <p>&copy; 2025 Soch Se Shabd Tak</p>
   </footer>
-
-  <script>
-    function toggleDarkMode() {
-      document.body.classList.toggle('dark-mode');
-    }
-  </script>
 </body>
+
 </html>
