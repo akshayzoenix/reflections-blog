@@ -1,9 +1,7 @@
 site_url: "https://sochseshabdtak.com"
 backend:
-  name: github
-  repo: akshayzoenix/reflections-blog
+  name: git-gateway
   branch: main
-  client_id: Ov23liFPuj77LTi8G7YK
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
