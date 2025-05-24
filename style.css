@@ -28,20 +28,13 @@ nav {
   flex-wrap: wrap;
 }
 
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 1rem;
-  padding: 0;
-}
-
 nav a {
   text-decoration: none;
   color: #333;
   font-weight: 500;
 }
 
-/* >>> ADDED: highlight active nav link */
+/* Highlight active nav link (add 'active' class in HTML to use) */
 nav a.active {
   font-weight: bold;
   border-bottom: 2px solid #333;
@@ -58,10 +51,6 @@ main {
   margin: 3rem auto;
   gap: 2rem;
   padding: 0 1rem;
-}
-
-.content {
-  flex: 2;
 }
 
 .posts {
@@ -81,7 +70,6 @@ main {
   }
 }
 
-.main-image,
 img.hero {
   width: 100%;
   height: auto;
@@ -89,18 +77,15 @@ img.hero {
   border-radius: 6px;
 }
 
-article,
 .post {
   margin-bottom: 2.5rem;
 }
 
-article h2,
 .post h2 {
   font-size: 1.8rem;
   margin-bottom: 0.5rem;
 }
 
-.meta,
 .post p.meta {
   color: #555;
   font-size: 0.9rem;
@@ -113,11 +98,6 @@ article h2,
 
 .sidebar h3 {
   margin-top: 0;
-}
-
-.tags ul {
-  list-style: none;
-  padding-left: 0;
 }
 
 .tags a {
@@ -182,7 +162,7 @@ body.dark-mode footer {
   border-bottom: 1px solid #555;
 }
 
-body.dark-mode .meta {
+body.dark-mode .post p.meta {
   color: #bbb;
 }
 
@@ -225,9 +205,5 @@ body.dark-mode .subscribe button:hover {
 @media (max-width: 768px) {
   main {
     flex-direction: column;
-  }
-  nav ul {
-    flex-direction: column;
-    gap: 0.5rem;
   }
 }
