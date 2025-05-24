@@ -3,12 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <title>Content Manager</title>
-    <script src="https://unpkg.com/@staticcms/app@^2.0.0/dist/static-cms-app.js"></script>
   </head>
   <body>
     <div id="nc-root"></div>
     <script>
-      window.CMS.init();
+      window.addEventListener("DOMContentLoaded", function () {
+        const script = document.createElement("script");
+        script.src = "https://unpkg.com/netlify-cms@2.10.192/dist/netlify-cms.js";
+        document.body.appendChild(script);
+      });
     </script>
   </body>
 </html>
