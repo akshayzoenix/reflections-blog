@@ -6,12 +6,19 @@
   </head>
   <body>
     <div id="nc-root"></div>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+
     <script>
-      window.addEventListener("DOMContentLoaded", function () {
-        const script = document.createElement("script");
-        script.src = "https://unpkg.com/netlify-cms@2.10.192/dist/netlify-cms.js";
-        document.body.appendChild(script);
-      });
+      // Initialize Netlify Identity widget to enable signup/reset UI
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', user => {
+          if (!user) {
+            window.netlifyIdentity.open(); // open widget on load if not logged in
+          }
+        });
+        window.netlifyIdentity.init();
+      }
     </script>
   </body>
 </html>
