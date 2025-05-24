@@ -12,6 +12,7 @@
       padding: 0;
       background: #fdfaf5;
       color: #111;
+      transition: background 0.3s, color 0.3s;
     }
     header, footer {
       padding: 2rem;
@@ -27,6 +28,7 @@
       justify-content: center;
       gap: 2rem;
       margin-top: 1rem;
+      flex-wrap: wrap;
     }
     nav a {
       text-decoration: none;
@@ -34,16 +36,25 @@
     }
     main {
       display: flex;
+      flex-wrap: wrap;
       max-width: 1100px;
       margin: 3rem auto;
       gap: 2rem;
       padding: 0 1rem;
     }
     .posts {
-      flex: 3;
+      flex: 3 1 100%;
     }
     .sidebar {
-      flex: 1;
+      flex: 1 1 100%;
+    }
+    @media (min-width: 768px) {
+      .posts {
+        flex: 3 1 0%;
+      }
+      .sidebar {
+        flex: 1 1 0%;
+      }
     }
     .post {
       margin-bottom: 2.5rem;
@@ -81,20 +92,65 @@
     }
     .subscribe button {
       width: 100%;
-      padding: 0.5rem;
+      padding: 0.6rem;
       background: #222;
       color: #fff;
       border: none;
       cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .subscribe button:hover {
+      background: #444;
+      transform: scale(1.05);
     }
     img.hero {
       width: 100%;
       height: auto;
       margin-bottom: 2rem;
+      border-radius: 6px;
+    }
+
+    /* Dark Mode */
+    body.dark-mode {
+      background: #111;
+      color: #fdfaf5;
+    }
+    body.dark-mode nav a,
+    body.dark-mode .tags a {
+      color: #fdfaf5;
+    }
+    body.dark-mode header, body.dark-mode footer {
+      border-bottom: 1px solid #555;
+    }
+    body.dark-mode .subscribe button {
+      background: #fdfaf5;
+      color: #111;
+    }
+
+    /* Dark mode toggle button */
+    .dark-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: #222;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 4px;
+      font-family: inherit;
+      transition: background 0.3s;
+      z-index: 999;
+    }
+    .dark-toggle:hover {
+      background: #444;
     }
   </style>
 </head>
 <body>
+  <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+
   <header>
     <h1>Reflections</h1>
     <nav>
@@ -105,6 +161,7 @@
       <a href="#">Newsletter</a>
     </nav>
   </header>
+
   <main>
     <div class="posts">
       <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" class="hero" alt="Cosmos">
@@ -129,6 +186,7 @@
         <p class="description">Thoughts on the quiet comfort and challenges of being alone in a noisy world.</p>
       </div>
     </div>
+
     <div class="sidebar">
       <div class="tags">
         <h3>Tags</h3>
@@ -145,9 +203,15 @@
       </div>
     </div>
   </main>
+
   <footer>
     <p>&copy; 2025 Soch Se Shabd Tak</p>
   </footer>
-</body>
 
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+  </script>
+</body>
 </html>
