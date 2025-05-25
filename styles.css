@@ -7,6 +7,13 @@ body {
   color: #111;
   transition: background 0.3s, color 0.3s;
 }
+
+/* Make all links inherit color by default (normal mode) */
+a {
+  color: inherit;
+  text-decoration: underline; /* optional, keeps links visible */
+}
+
 header, footer {
   padding: 2rem;
   text-align: center;
@@ -23,9 +30,10 @@ nav {
   margin-top: 1rem;
   flex-wrap: wrap;
 }
+/* Removed color: #333 from nav a to rely on inherited color */
 nav a {
   text-decoration: none;
-  color: #333;
+  /* color: #333;  <-- removed */
 }
 main {
   display: flex;
@@ -75,7 +83,8 @@ main {
   border-radius: 4px;
   text-decoration: none;
   font-size: 0.9rem;
-  color: #333;
+  /* Removed color: #333 to inherit */
+  /* color: #333; <-- removed */
 }
 .subscribe input[type="email"] {
   width: 100%;
@@ -109,14 +118,10 @@ body.dark-mode {
   background: #111;
   color: #fdfaf5;
 }
-body.dark-mode nav a,
-body.dark-mode .tags a {
-  color: #fdfaf5;
-}
-/* Added: Make all links inherit color in dark mode to avoid default blue */
+/* Make all links inherit color in dark mode */
 body.dark-mode a {
   color: inherit;
-  text-decoration: underline; /* optional: keep underline for clarity */
+  text-decoration: underline; /* optional */
 }
 body.dark-mode header, body.dark-mode footer {
   border-bottom: 1px solid #555;
