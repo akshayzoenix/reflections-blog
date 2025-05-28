@@ -1,39 +1,73 @@
-module.exports = function(eleventyConfig) {
-  eleventyConfig.addPassthroughCopy("styles.css");
-  eleventyConfig.addPassthroughCopy("admin"); 
-  eleventyConfig.addPassthroughCopy("images");
-
-  // Simple date filter - formats date as "Month day, Year"
-  eleventyConfig.addFilter("date", (dateObj) => {
-    if (!(dateObj instanceof Date)) {
-      dateObj = new Date(dateObj);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ title }} | Soch Se Shabd Tak</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    /* Inline minimal overrides if needed */
+    body {
+      font-family: 'Georgia', serif;
+      background: #f8f4f0;
+      color: #333;
+      margin: 0; padding: 0;
+      line-height: 1.6;
     }
-    return dateObj.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  });
-
-  eleventyConfig.addCollection("posts", function(collectionApi) {
-    return collectionApi.getFilteredByGlob("posts/*.md").reverse();
-  });
-
-  // Automatically assign layout "layouts/post.njk" to all posts markdown files
-  eleventyConfig.addGlobalData('eleventyComputed', {
-    layout: data => {
-      if (data.page.inputPath && data.page.inputPath.includes("/posts/")) {
-        return "layouts/post.njk";
+    main {
+      max-width: 720px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+    }
+    article header h1 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+      color: #4a403a;
+    }
+    article header .post-date {
+      font-size: 0.9rem;
+      color: #8a7f7a;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+    article section.post-content {
+      font-size: 1.15rem;
+      color: #4a403a;
+      white-space: pre-line; /* keep line breaks in Hindi */
+    }
+    a {
+      color: #70503f;
+      text-decoration: none;
+      border-bottom: 1px dotted #70503f;
+    }
+    a:hover {
+      border-bottom: 1px solid #70503f;
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      main {
+        margin: 2rem 1rem;
+        font-size: 1rem;
       }
-      return data.layout || null;
+      article header h1 {
+        font-size: 2rem;
+      }
     }
-  });
+  </style>
+</head>
+<body>
+  <main>
+    <article class="post">
+      <header>
+        <h1>{{ title }}</h1>
+        <p class="post-date">{{ date | date }}</p>
+      </header>
 
-  return {
-    dir: {
-      input: ".",
-      includes: "_includes",
-      output: "_site"
-    }
-  };
-};
+      <section class="post-content">
+        {{ content | safe }}
+      </section>
+    </article>
+  </main>
+</body>
+</html>
