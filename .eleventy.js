@@ -19,6 +19,16 @@ module.exports = function(eleventyConfig) {
     return collectionApi.getFilteredByGlob("posts/*.md").reverse();
   });
 
+  // Automatically assign layout "layouts/post.njk" to all posts markdown files
+  eleventyConfig.addGlobalData('eleventyComputed', {
+    layout: data => {
+      if (data.page.inputPath && data.page.inputPath.includes("/posts/")) {
+        return "layouts/post.njk";
+      }
+      return data.layout || null;
+    }
+  });
+
   return {
     dir: {
       input: ".",
