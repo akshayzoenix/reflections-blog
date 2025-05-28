@@ -1,9 +1,8 @@
 module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("styles.css");
-  eleventyConfig.addPassthroughCopy("admin"); 
+  eleventyConfig.addPassthroughCopy("admin");
   eleventyConfig.addPassthroughCopy("images");
 
-  // Simple date filter - formats date as "Month day, Year"
   eleventyConfig.addFilter("date", (dateObj) => {
     if (!(dateObj instanceof Date)) {
       dateObj = new Date(dateObj);
@@ -19,12 +18,10 @@ module.exports = function(eleventyConfig) {
     return collectionApi.getFilteredByGlob("posts/*.md").reverse();
   });
 
-  // Automatically assign layout "post.njk" to all posts markdown files
   eleventyConfig.addGlobalData('eleventyComputed', {
     layout: data => {
       if (data.page.inputPath && data.page.inputPath.includes("/posts/")) {
-        // Since includes dir is _includes/layouts, just use "post.njk"
-        return "post.njk";
+        return "layouts/post.njk"; // because includes root is "_includes"
       }
       return data.layout || null;
     }
@@ -33,7 +30,7 @@ module.exports = function(eleventyConfig) {
   return {
     dir: {
       input: ".",
-      includes: "_includes/layouts",  // point includes to layouts folder directly
+      includes: "_includes",  // set includes root here
       output: "_site"
     }
   };
