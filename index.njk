@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reflections</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+
+  <header>
+    <h1>Reflections</h1>
+    <nav>
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="posts.html">Posts</a>
+      <a href="tags.html">Tags</a>
+      <a href="newsletter.html">Newsletter</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="posts">
+      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" class="hero" alt="Cosmos">
+
+      {% for post in collections.posts %}
+      <div class="post">
+        <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
+        <p class="meta">{{ post.date | date("MMMM D, YYYY") }} · {{ post.data.tags | join(", ") }}</p>
+        <p class="description">{{ post.templateContent | safe }}</p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="sidebar">
+      <div class="tags">
+        <h3>Tags</h3>
+        <a href="#">Philosophy</a>
+        <a href="#">Cosmology</a>
+        <a href="#">Shayari</a>
+        <a href="#">Wisdom</a>
+      </div>
+      <div class="subscribe">
+        <h3>Subscribe</h3>
+        <p>Get the latest posts delivered straight to your inbox</p>
+        <input type="email" placeholder="Email address">
+        <button>Subscribe</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Soch Se Shabd Tak</p>
+  </footer>
+
+  <script>
+    if (localStorage.getItem('dark-mode') === 'enabled') {
+      document.body.classList.add('dark-mode');
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      if (document.body.classList.contains('dark-mode')) {
+        localStorage.setItem('dark-mode', 'enabled');
+      } else {
+        localStorage.setItem('dark-mode', 'disabled');
+      }
+    }
+  </script>
+</body>
+</html>
