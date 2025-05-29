@@ -3,71 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{{ title }} | Soch Se Shabd Tak</title>
+  <title>{{ title }} | Reflections</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles.css" />
-  <style>
-    /* Inline minimal overrides if needed */
-    body {
-      font-family: 'Georgia', serif;
-      background: #f8f4f0;
-      color: #333;
-      margin: 0; padding: 0;
-      line-height: 1.6;
-    }
-    main {
-      max-width: 720px;
-      margin: 3rem auto;
-      padding: 0 1rem;
-    }
-    article header h1 {
-      font-size: 2.5rem;
-      font-weight: 600;
-      margin-bottom: 0.2rem;
-      color: #4a403a;
-    }
-    article header .post-date {
-      font-size: 0.9rem;
-      color: #8a7f7a;
-      margin-bottom: 2rem;
-      font-style: italic;
-    }
-    article section.post-content {
-      font-size: 1.15rem;
-      color: #4a403a;
-      white-space: pre-line; /* keep line breaks in Hindi */
-    }
-    a {
-      color: #70503f;
-      text-decoration: none;
-      border-bottom: 1px dotted #70503f;
-    }
-    a:hover {
-      border-bottom: 1px solid #70503f;
-    }
-    /* Responsive */
-    @media (max-width: 600px) {
-      main {
-        margin: 2rem 1rem;
-        font-size: 1rem;
-      }
-      article header h1 {
-        font-size: 2rem;
-      }
-    }
-  </style>
 </head>
 <body>
-  <main>
-    <article class="post">
-      <header>
-        <h1>{{ title }}</h1>
-        <p class="post-date">{{ date | date }}</p>
-      </header>
+  <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
 
-      <section class="post-content">
+  <header>
+    <h1>Reflections</h1>
+    <nav>
+      <a href="/index.html">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/posts.html">Posts</a>
+      <a href="/tags.html">Tags</a>
+      <a href="/newsletter.html">Newsletter</a>
+    </nav>
+  </header>
+
+  <main style="max-width: 800px; margin: 3rem auto; padding: 0 1rem;">
+    <article class="post">
+      <h2>{{ title }}</h2>
+      <p class="meta">{{ date | date }}</p>
+      <div class="post-body">
         {{ content | safe }}
-      </section>
+      </div>
     </article>
   </main>
+
+  <footer>
+    <p>&copy; 2025 Soch Se Shabd Tak</p>
+  </footer>
+
+  <script>
+    // On page load, apply dark mode if it's enabled in localStorage
+    if (localStorage.getItem("dark-mode") === "enabled") {
+      document.body.classList.add("dark-mode");
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+      if (document.body.classList.contains("dark-mode")) {
+        localStorage.setItem("dark-mode", "enabled");
+      } else {
+        localStorage.setItem("dark-mode", "disabled");
+      }
+    }
+  </script>
 </body>
 </html>
