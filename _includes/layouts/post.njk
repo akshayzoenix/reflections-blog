@@ -3,71 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{{ title }} | Soch Se Shabd Tak</title>
+  <title>{{ title }} | Reflections</title>
   <link rel="stylesheet" href="/styles.css" />
-  <style>
-    /* Inline minimal overrides if needed */
-    body {
-      font-family: 'Georgia', serif;
-      background: #f8f4f0;
-      color: #333;
-      margin: 0; padding: 0;
-      line-height: 1.6;
-    }
-    main {
-      max-width: 720px;
-      margin: 3rem auto;
-      padding: 0 1rem;
-    }
-    article header h1 {
-      font-size: 2.5rem;
-      font-weight: 600;
-      margin-bottom: 0.2rem;
-      color: #4a403a;
-    }
-    article header .post-date {
-      font-size: 0.9rem;
-      color: #8a7f7a;
-      margin-bottom: 2rem;
-      font-style: italic;
-    }
-    article section.post-content {
-      font-size: 1.15rem;
-      color: #4a403a;
-      white-space: pre-line; /* keep line breaks in Hindi */
-    }
-    a {
-      color: #70503f;
-      text-decoration: none;
-      border-bottom: 1px dotted #70503f;
-    }
-    a:hover {
-      border-bottom: 1px solid #70503f;
-    }
-    /* Responsive */
-    @media (max-width: 600px) {
-      main {
-        margin: 2rem 1rem;
-        font-size: 1rem;
-      }
-      article header h1 {
-        font-size: 2rem;
-      }
-    }
-  </style>
 </head>
 <body>
-  <main>
-    <article class="post">
-      <header>
-        <h1>{{ title }}</h1>
-        <p class="post-date">{{ date | date }}</p>
-      </header>
+  <header class="site-header">
+    <h1 class="site-title"><a href="/">Reflections</a></h1>
+    <nav class="site-nav">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/posts/">Posts</a></li>
+        <li><a href="/tags/">Tags</a></li>
+        <li><a href="/newsletter/">Newsletter</a></li>
+      </ul>
+    </nav>
+    <button class="dark-mode-toggle" aria-label="Toggle dark mode">🌙</button>
+  </header>
 
-      <section class="post-content">
+  <main class="post-content">
+    <article>
+      <h1>{{ title }}</h1>
+      <p class="post-date">{{ date | date }}</p>
+      <div class="post-body">
         {{ content | safe }}
-      </section>
+      </div>
     </article>
   </main>
+
+  <footer class="site-footer">
+    <p>© 2025 Soch Se Shabd Tak</p>
+  </footer>
 </body>
 </html>
