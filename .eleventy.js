@@ -7,8 +7,8 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("admin");
   eleventyConfig.addPassthroughCopy("images");
 
-  // Markdown library
-  eleventyConfig.setLibrary("md", markdownIt());
+  // Markdown library (with HTML allowed)
+  eleventyConfig.setLibrary("md", markdownIt({ html: true }));
 
   eleventyConfig.addFilter("date", (dateObj) => {
     if (!(dateObj instanceof Date)) {
