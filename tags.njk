@@ -25,12 +25,10 @@
     <div class="content">
       <h2>Browse by Tag</h2>
       <ul>
-        {% for tag in collections.posts | map(post => post.data.tags) | flatten | uniq | sort %}
-          {% if tag %}
-            <li>
-              <a href="/tags/{{ tag | slug }}/">{{ tag }}</a>
-            </li>
-          {% endif %}
+        {% for tag in collections | tagList %}
+          <li>
+            <a href="/tags/{{ tag | slug }}/">{{ tag }}</a>
+          </li>
         {% endfor %}
       </ul>
     </div>
