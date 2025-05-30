@@ -6,15 +6,16 @@ backend:
   branch: main
   client_id: Ov23liFPuj77LTi8G7YK
 
+# Where uploaded media (images) are stored in the repo
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
-  - name: "posts"
-    label: "Blog Posts"
-    folder: "posts"
-    create: true
-    slug: "{{slug}}"
+  - name: "posts"          # Collection name for the CMS
+    label: "Blog Posts"    # Label shown in the CMS UI
+    folder: "posts"        # Folder where Markdown files are stored
+    create: true           # Allow creating new files
+    slug: "{{slug}}"       # URL slug format based on title or input
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
@@ -22,5 +23,15 @@ collections:
         label: "Featured Image"
         name: "featured_image"
         widget: "image"
-        required: false
+        required: false     # Optional image upload for posts (desktop upload supported)
+      - 
+        label: "Draft"
+        name: "draft"
+        widget: "boolean"
+        default: false      # Optional draft flag — prevents post from showing live
+      - 
+        label: "Tags"
+        name: "tags"
+        widget: "list"
+        required: false     # Optional tags for posts (can be used for filtering/archive)
       - { label: "Body", name: "body", widget: "markdown" }
