@@ -23,11 +23,39 @@
 
   <main style="max-width: 800px; margin: 3rem auto; padding: 0 1rem;">
     <article class="post">
+      
+      <!-- Draft badge (if draft: true in frontmatter) -->
+      {% if draft %}
+        <p style="color: red; font-weight: bold;">⚠️ Draft Post</p>
+      {% endif %}
+
       <h2>{{ title }}</h2>
       <p class="meta">{{ date | date }}</p>
+      
+      <!-- Featured image (if uploaded in frontmatter) -->
+      {% if featured_image %}
+        <div class="post-featured-image">
+          <img src="{{ featured_image }}" alt="{{ title }}" style="max-width: 100%; height: auto; margin: 1rem 0;">
+        </div>
+      {% endif %}
+
+      <!-- Main post body -->
       <div class="post-body">
         {{ content | safe }}
       </div>
+
+      <!-- Tags (if provided in frontmatter) -->
+      {% if tags %}
+        <div class="post-tags" style="margin-top: 1rem;">
+          <strong>Tags:</strong>
+          <ul style="list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            {% for tag in tags %}
+              <li style="background: #eee; padding: 0.3rem 0.6rem; border-radius: 12px;">#{{ tag }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
     </article>
   </main>
 
