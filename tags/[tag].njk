@@ -1,0 +1,12 @@
+---
+pagination:
+  data: collections.tagMap
+  size: 1
+  alias: tagPosts
+  addAllPagesToCollections: true
+  permalink: "/tags/{{ pagination.page }}/"
+eleventyComputed:
+  tag: "{{ pagination.page }}"
+  posts: "{{ collections.tagMap[pagination.page] }}"
+layout: "_include_layouts/tag.njk"
+---
