@@ -1,13 +1,7 @@
-const markdownIt = require("markdown-it");
-
 module.exports = function(eleventyConfig) {
-  eleventyConfig.setDataDeepMerge(true);
-
   eleventyConfig.addPassthroughCopy("styles.css");
   eleventyConfig.addPassthroughCopy("admin");
   eleventyConfig.addPassthroughCopy("images");
-
-  eleventyConfig.setLibrary("md", markdownIt({ html: true }));
 
   eleventyConfig.addFilter("date", (dateObj) => {
     if (!(dateObj instanceof Date)) {
@@ -27,7 +21,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addGlobalData('eleventyComputed', {
     layout: data => {
       if (data.page.inputPath && data.page.inputPath.includes("/posts/")) {
-        return "layouts/post.njk";
+        return "layouts/post.njk"; // because includes root is "_includes"
       }
       return data.layout || null;
     }
@@ -36,7 +30,7 @@ module.exports = function(eleventyConfig) {
   return {
     dir: {
       input: ".",
-      includes: "_includes",
+      includes: "_includes",  // set includes root here
       output: "_site"
     }
   };
