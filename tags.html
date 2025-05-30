@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tags - Reflections</title>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
   <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
@@ -25,10 +25,12 @@
     <div class="content">
       <h2>Browse by Tag</h2>
       <ul>
-        {% for tag in collections | tagList %}
-          <li>
-            <a href="/tags/{{ tag | slug }}/">{{ tag }}</a>
-          </li>
+        {% for tag in collections.posts | map(post => post.data.tags) | flatten | uniq | sort %}
+          {% if tag %}
+            <li>
+              <a href="/tags/{{ tag | slug }}/">{{ tag }}</a>
+            </li>
+          {% endif %}
         {% endfor %}
       </ul>
     </div>
