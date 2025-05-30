@@ -7,31 +7,35 @@ backend:
   client_id: Ov23liFPuj77LTi8G7YK
 
 # Where uploaded media (images) are stored in the repo
-media_folder: "images/uploads"
-public_folder: "/images/uploads"
+media_folder: "images/uploads"    # Repo folder where images are saved
+public_folder: "/images/uploads"  # Public URL path to access images
 
 collections:
-  - name: "posts"          # Collection name for the CMS
-    label: "Blog Posts"    # Label shown in the CMS UI
-    folder: "posts"        # Folder where Markdown files are stored
-    create: true           # Allow creating new files
-    slug: "{{slug}}"       # URL slug format based on title or input
+  - name: "posts"                 # Internal collection name (used by CMS)
+    label: "Blog Posts"           # Label shown in the CMS sidebar
+    folder: "posts"               # Folder where Markdown files are saved
+    create: true                  # Allow creating new files from CMS
+    slug: "{{slug}}"              # Slug format (auto-generated from title or input)
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Date", name: "date", widget: "datetime" }
-      - 
-        label: "Featured Image"
+      - label: "Title"
+        name: "title"
+        widget: "string"
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+      - label: "Featured Image"
         name: "featured_image"
         widget: "image"
-        required: false     # Optional image upload for posts (desktop upload supported)
-      - 
-        label: "Draft"
+        required: false           # Optional — upload images from desktop into media_folder
+      - label: "Draft"
         name: "draft"
         widget: "boolean"
-        default: false      # Optional draft flag — prevents post from showing live
-      - 
-        label: "Tags"
+        default: false            # Optional — mark post as draft
+      - label: "Tags"
         name: "tags"
         widget: "list"
-        required: false     # Optional tags for posts (can be used for filtering/archive)
-      - { label: "Body", name: "body", widget: "markdown" }
+        allow_add: true           # Allow adding multiple tags (list of strings)
+        required: false           # Optional — you can skip if no tags
+      - label: "Body"
+        name: "body"
+        widget: "markdown"        # Main post content (Markdown editor)
