@@ -1,4 +1,14 @@
+const markdownIt = require("markdown-it");
+
 module.exports = function(eleventyConfig) {
+  // Configure markdown-it with breaks enabled for automatic line breaks
+  const mdOptions = {
+    html: true,
+    breaks: true,  // Enable hard line breaks on single newlines
+    linkify: true
+  };
+  eleventyConfig.setLibrary("md", markdownIt(mdOptions));
+
   eleventyConfig.addPassthroughCopy("styles.css");
   eleventyConfig.addPassthroughCopy("admin");
   eleventyConfig.addPassthroughCopy("images");
