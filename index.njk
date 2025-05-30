@@ -11,19 +11,18 @@ title: Reflections
     alt="Cosmos"
   />
   
-  {# Loop over posts collection #}
   {% if collections.posts.length %}
     {% for post in collections.posts %}
       <div class="post">
         <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
-        <p class="meta">{{ post.date | date }} ·
-          {%- if post.data.tags -%}
-            {{ post.data.tags | join(", ") }}
-          {%- endif -%}
+        <p class="meta">{{ post.date | date }} 
+          {% if post.data.tags %}
+            · {{ post.data.tags | join(", ") }}
+          {% endif %}
         </p>
-        <p class="description">
-          {{ post.templateContent or post.data.content or "No content available" }}
-        </p>
+        <div class="description">
+          {{ post.templateContent | safe }}
+        </div>
       </div>
     {% endfor %}
   {% else %}
