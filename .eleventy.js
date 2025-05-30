@@ -26,11 +26,36 @@ module.exports = function(eleventyConfig) {
     });
   });
 
+  // Filter: Unique tag list (used for the tags page)
+  eleventyConfig.addFilter("tagList", function(collections) {
+    const tagSet = new Set();
+    collections.posts.forEach(post => {
+      if ("tags" in post.data) {
+        post.data.tags.forEach(tag => tagSet.add(tag));
+      }
+    });
+    return [...tagSet];
+  });
+
   // Define the 'posts' collection, excluding drafts
   eleventyConfig.addCollection("posts", function(collectionApi) {
     return collectionApi.getFilteredByGlob("posts/*.md")
       .filter(post => !post.data.draft) // Exclude draft posts from live site
       .reverse();                       // Show newest posts first
+  });
+
+  // Collection: Group posts by tag (used to generate tag pages)
+  eleventyConfig.addCollection("tagMap", function(collectionApi) {
+    let tagMap = {};
+    collectionApi.getFilteredByGlob("posts/*.md").forEach(post => {
+      if (!post.data.draft && post.data.tags) {
+        post.data.tags.forEach(tag => {
+          if (!tagMap[tag]) tagMap[tag] = [];
+          tagMap[tag].push(post);
+        });
+      }
+    });
+    return tagMap;
   });
 
   // Dynamically set the layout for posts based on folder
