@@ -14,7 +14,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("admin");
   eleventyConfig.addPassthroughCopy("images");
 
-  // Add a custom date filter for formatting post dates
+  // Custom date filter for formatting post dates
   eleventyConfig.addFilter("date", (dateObj) => {
     if (!(dateObj instanceof Date)) {
       dateObj = new Date(dateObj);
