@@ -25,7 +25,7 @@
     <div class="content">
       <h2>Browse by Tag</h2>
       <ul>
-        {% for tag in collections.posts | map('data.tags') | flatten | uniq | sort %}
+        {% for tag in collections | tagList | sort %}
           <li>
             <a href="/tags/{{ tag | slug }}/">{{ tag }}</a>
           </li>
