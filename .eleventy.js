@@ -37,11 +37,23 @@ module.exports = function(eleventyConfig) {
     return [...tagSet];
   });
 
+  // Simple slugify filter (no external dependency)
+  eleventyConfig.addFilter("slugify", function(str) {
+    if (!str) return "";
+    return str
+      .toString()
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "-")        // Replace spaces with hyphens
+      .replace(/[^\w\-]+/g, "")    // Remove non-word characters
+      .replace(/\-\-+/g, "-");     // Replace multiple hyphens with one
+  });
+
   // Define the 'posts' collection, excluding drafts
   eleventyConfig.addCollection("posts", function(collectionApi) {
     return collectionApi.getFilteredByGlob("posts/*.md")
-      .filter(post => !post.data.draft) // Exclude draft posts from live site
-      .reverse();                       // Show newest posts first
+      .filter(post => !post.data.draft) // Exclude drafts
+      .reverse();                       // Newest first
   });
 
   // Collection: Group posts by tag (used to generate tag pages)
@@ -58,21 +70,38 @@ module.exports = function(eleventyConfig) {
     return tagMap;
   });
 
-  // Dynamically set the layout for posts based on folder
+  // Build slug to tag mapping for URLs (used in [tags].njk and links)
+  eleventyConfig.addGlobalData("tagSlugMap", () => {
+    const tagMap = {};
+    const tags = Object.keys(eleventyConfig.javascriptFunctions.collections.tagMap || {});
+    tags.forEach(tag => {
+      const slug = tag
+        .toString()
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, "-")
+        .replace(/[^\w\-]+/g, "")
+        .replace(/\-\-+/g, "-");
+      tagMap[slug] = tag;
+    });
+    return tagMap;
+  });
+
+  // Dynamically set layout for posts based on folder
   eleventyConfig.addGlobalData('eleventyComputed', {
     layout: data => {
       if (data.page.inputPath && data.page.inputPath.includes("/posts/")) {
-        return "layouts/post.njk"; // Use the 'post' layout for posts
+        return "layouts/post.njk"; // Post layout
       }
-      return data.layout || null;  // Use any explicitly set layout otherwise
+      return data.layout || null;
     }
   });
 
   return {
     dir: {
-      input: ".",            // Project root as input folder
-      includes: "_includes", // Set _includes folder for layouts/partials
-      output: "_site"        // Output build folder
+      input: ".",
+      includes: "_includes",
+      output: "_site",
     }
   };
 };
