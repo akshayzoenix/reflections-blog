@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tags - Reflections</title>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
 
   <header>
-    <h1>Tags</h1>
+    <h1>Reflections</h1>
     <nav>
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
@@ -22,13 +22,30 @@
   </header>
 
   <main>
-    <div class="content">
+    <div class="posts">
       <h2>Browse by Tag</h2>
-      <ul>
-        <li><a href="posts.html#philosophy">Philosophy</a></li>
-        <li><a href="posts.html#cosmology">Cosmology</a></li>
-        <li><a href="posts.html#shayari">Shayari</a></li>
-      </ul>
+      <div class="tags">
+        <a href="posts.html#philosophy">Philosophy</a>
+        <a href="posts.html#cosmology">Cosmology</a>
+        <a href="posts.html#shayari">Shayari</a>
+        <a href="posts.html#wisdom">Wisdom</a>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="tags">
+        <h3>Tags</h3>
+        <a href="posts.html#philosophy">Philosophy</a>
+        <a href="posts.html#cosmology">Cosmology</a>
+        <a href="posts.html#shayari">Shayari</a>
+        <a href="posts.html#wisdom">Wisdom</a>
+      </div>
+      <div class="subscribe">
+        <h3>Subscribe</h3>
+        <p>Get the latest posts delivered straight to your inbox</p>
+        <input type="email" placeholder="Email address" />
+        <button>Subscribe</button>
+      </div>
     </div>
   </main>
 
@@ -37,17 +54,17 @@
   </footer>
 
   <script>
-    // Apply dark mode if it was previously enabled
-    if (localStorage.getItem('dark-mode') === 'enabled') {
-      document.body.classList.add('dark-mode');
+    // On page load, apply dark mode if it's enabled in localStorage
+    if (localStorage.getItem("dark-mode") === "enabled") {
+      document.body.classList.add("dark-mode");
     }
 
     function toggleDarkMode() {
-      document.body.classList.toggle('dark-mode');
-      if (document.body.classList.contains('dark-mode')) {
-        localStorage.setItem('dark-mode', 'enabled');
+      document.body.classList.toggle("dark-mode");
+      if (document.body.classList.contains("dark-mode")) {
+        localStorage.setItem("dark-mode", "enabled");
       } else {
-        localStorage.setItem('dark-mode', 'disabled');
+        localStorage.setItem("dark-mode", "disabled");
       }
     }
   </script>
