@@ -2,6 +2,7 @@ const markdownIt = require("markdown-it");
 const slugify = require("slugify");
 
 module.exports = function(eleventyConfig) {
+  // Markdown-it setup
   const mdOptions = {
     html: true,
     breaks: true,
@@ -9,10 +10,12 @@ module.exports = function(eleventyConfig) {
   };
   eleventyConfig.setLibrary("md", markdownIt(mdOptions));
 
+  // Passthrough files
   eleventyConfig.addPassthroughCopy("styles.css");
   eleventyConfig.addPassthroughCopy("admin");
   eleventyConfig.addPassthroughCopy("images");
 
+  // Date filter
   eleventyConfig.addFilter("date", (dateObj) => {
     if (!(dateObj instanceof Date)) {
       dateObj = new Date(dateObj);
@@ -24,6 +27,12 @@ module.exports = function(eleventyConfig) {
     });
   });
 
+  // Slugify filter for templates
+  eleventyConfig.addFilter("slugify", function(str) {
+    return slugify(str, { lower: true, strict: true });
+  });
+
+  // Collections
   eleventyConfig.addCollection("posts", function(collectionApi) {
     return collectionApi.getFilteredByGlob("posts/*.md")
       .filter(post => !post.data.draft)
@@ -31,7 +40,7 @@ module.exports = function(eleventyConfig) {
   });
 
   eleventyConfig.addCollection("tagMap", function(collectionApi) {
-    let tagMap = {};
+    const tagMap = {};
     collectionApi.getFilteredByGlob("posts/*.md").forEach(post => {
       if (!post.data.draft && post.data.tags) {
         post.data.tags.forEach(tag => {
@@ -43,7 +52,8 @@ module.exports = function(eleventyConfig) {
     return tagMap;
   });
 
-  eleventyConfig.addGlobalData('eleventyComputed', {
+  // Computed layout for posts
+  eleventyConfig.addGlobalData("eleventyComputed", {
     layout: data => {
       if (data.page.inputPath && data.page.inputPath.includes("/posts/")) {
         return "layouts/post.njk";
@@ -52,6 +62,7 @@ module.exports = function(eleventyConfig) {
     }
   });
 
+  // Return directories
   return {
     dir: {
       input: ".",
