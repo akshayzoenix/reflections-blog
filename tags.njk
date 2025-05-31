@@ -8,8 +8,10 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Dark Mode Toggle button fixed top-right, exactly like index.html -->
   <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
 
+  <!-- Header with site title and nav -->
   <header>
     <h1>Reflections</h1>
     <nav>
@@ -22,6 +24,7 @@
   </header>
 
   <main>
+    <!-- Main content section with same class names for flex layout -->
     <div class="posts">
       <h2>Browse by Tag</h2>
       <div class="tags">
@@ -32,6 +35,7 @@
       </div>
     </div>
 
+    <!-- Sidebar exactly as on index.html -->
     <div class="sidebar">
       <div class="tags">
         <h3>Tags</h3>
@@ -49,12 +53,13 @@
     </div>
   </main>
 
+  <!-- Footer identical to index.html -->
   <footer>
     <p>&copy; 2025 Soch Se Shabd Tak</p>
   </footer>
 
+  <!-- Dark mode toggle script exactly same -->
   <script>
-    // On page load, apply dark mode if it's enabled in localStorage
     if (localStorage.getItem("dark-mode") === "enabled") {
       document.body.classList.add("dark-mode");
     }
