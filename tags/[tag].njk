@@ -1,12 +1,12 @@
 ---
 pagination:
-  data: collections.tagMap
+  data: collections.tagMap | keys | map(tag => tag | slug)  # paginate over slugified tags
   size: 1
-  alias: tagPosts
+  alias: tagSlug
   addAllPagesToCollections: true
-  permalink: "/tags/{{ pagination.page }}/"
+  permalink: "/tags/{{ tagSlug }}/"
 eleventyComputed:
-  tag: "{{ pagination.page }}"
-  posts: "{{ collections.tagMap[pagination.page] }}"
+  tag: "{{ tagSlugMap[tagSlug] }}"
+  posts: "{{ collections.tagMap[tag] }}"
 layout: "layouts/tag.njk"
 ---
