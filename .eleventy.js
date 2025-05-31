@@ -1,4 +1,5 @@
 const markdownIt = require("markdown-it");
+const slugify = require("slugify");
 
 module.exports = function(eleventyConfig) {
   // Configure markdown-it with automatic line breaks and HTML support
@@ -9,12 +10,12 @@ module.exports = function(eleventyConfig) {
   };
   eleventyConfig.setLibrary("md", markdownIt(mdOptions));
 
-  // Copy static files directly to the output folder
+  // Passthrough copies
   eleventyConfig.addPassthroughCopy("styles.css");
   eleventyConfig.addPassthroughCopy("admin");
   eleventyConfig.addPassthroughCopy("images");
 
-  // Custom date filter for formatting post dates
+  // Date filter
   eleventyConfig.addFilter("date", (dateObj) => {
     if (!(dateObj instanceof Date)) {
       dateObj = new Date(dateObj);
@@ -26,7 +27,7 @@ module.exports = function(eleventyConfig) {
     });
   });
 
-  // Filter: Unique tag list (used for the tags page)
+  // Unique tag list filter
   eleventyConfig.addFilter("tagList", function(collections) {
     const tagSet = new Set();
     collections.posts.forEach(post => {
@@ -37,14 +38,19 @@ module.exports = function(eleventyConfig) {
     return [...tagSet];
   });
 
+  // Add slugify filter (use in Nunjucks templates)
+  eleventyConfig.addFilter("slugify", (str) => {
+    return slugify(str, { lower: true, strict: true });
+  });
+
   // Define the 'posts' collection, excluding drafts
   eleventyConfig.addCollection("posts", function(collectionApi) {
     return collectionApi.getFilteredByGlob("posts/*.md")
-      .filter(post => !post.data.draft) // Exclude draft posts from live site
-      .reverse();                       // Show newest posts first
+      .filter(post => !post.data.draft)
+      .reverse();
   });
 
-  // Collection: Group posts by tag (used to generate tag pages)
+  // Collection: Group posts by tag
   eleventyConfig.addCollection("tagMap", function(collectionApi) {
     let tagMap = {};
     collectionApi.getFilteredByGlob("posts/*.md").forEach(post => {
@@ -58,23 +64,37 @@ module.exports = function(eleventyConfig) {
     return tagMap;
   });
 
-  // Dynamically set the layout for posts based on folder
+  // Add global data 'tagSlugMap' for mapping slug => original tag
+  eleventyConfig.addGlobalData("tagSlugMap", (data) => {
+    const collections = data.collections;
+    let tagSlugMap = {};
+    if (!collections || !collections.posts) return tagSlugMap;
+
+    collections.posts.forEach(post => {
+      if (post.data.tags) {
+        post.data.tags.forEach(tag => {
+          tagSlugMap[slugify(tag, { lower: true, strict: true })] = tag;
+        });
+      }
+    });
+    return tagSlugMap;
+  });
+
+  // Dynamically set layout for posts
   eleventyConfig.addGlobalData('eleventyComputed', {
     layout: data => {
       if (data.page.inputPath && data.page.inputPath.includes("/posts/")) {
-        return "layouts/post.njk"; // Use the 'post' layout for posts
+        return "layouts/post.njk";
       }
-      return data.layout || null;  // Use any explicitly set layout otherwise
+      return data.layout || null;
     }
   });
 
   return {
     dir: {
-      input: ".",            // Project root as input folder
-      includes: "_includes", // Set _includes folder for layouts/partials
-      output: "_site"        // Output build folder
+      input: ".",
+      includes: "_includes",
+      output: "_site"
     }
   };
 };
-
-
