@@ -1,5 +1,5 @@
 const markdownIt = require("markdown-it");
-const slugify = require("slugify");  // npm i slugify
+const slugify = require("slugify");
 
 module.exports = function(eleventyConfig) {
   const mdOptions = {
@@ -24,16 +24,6 @@ module.exports = function(eleventyConfig) {
     });
   });
 
-  eleventyConfig.addFilter("tagList", function(collections) {
-    const tagSet = new Set();
-    collections.posts.forEach(post => {
-      if ("tags" in post.data) {
-        post.data.tags.forEach(tag => tagSet.add(tag));
-      }
-    });
-    return [...tagSet];
-  });
-
   eleventyConfig.addCollection("posts", function(collectionApi) {
     return collectionApi.getFilteredByGlob("posts/*.md")
       .filter(post => !post.data.draft)
@@ -53,16 +43,40 @@ module.exports = function(eleventyConfig) {
     return tagMap;
   });
 
-  // **New: build a tagSlugMap to use in templates for slug => tag**
-  eleventyConfig.addGlobalData("tagSlugMap", function(collectionApi) {
-    // collectionApi is NOT available here — so build this manually:
-    // Instead, get tagMap and transform keys to slug keys:
-    const tagMap = eleventyConfig.javascriptFunctions.collections.tagMap || {};
+  // Build tagSlugMap **as a collection** instead of global data for easier access
+  eleventyConfig.addCollection("tagSlugMap", function(collectionApi) {
+    const tagMap = collectionApi.getAll()[0]?.data.tagMap || {};
+    // But this is not reliable because tagMap is custom, so instead:
+    // We'll build it manually from tagMap collection:
+    const tagMapCollection = eleventyConfig.javascriptFunctions.collections.tagMap || {};
+    // That might still be undefined, so better build fresh:
+    let tagMapSafe = {};
+    collectionApi.getFilteredByGlob("posts/*.md").forEach(post => {
+      if (!post.data.draft && post.data.tags) {
+        post.data.tags.forEach(tag => {
+          if (!tagMapSafe[tag]) tagMapSafe[tag] = [];
+          tagMapSafe[tag].push(post);
+        });
+      }
+    });
     const map = {};
-    Object.keys(tagMap).forEach(tag => {
+    Object.keys(tagMapSafe).forEach(tag => {
       map[slugify(tag, { lower: true, strict: true })] = tag;
     });
-    return map;
+    return [map]; // Must return an array for collections
+  });
+
+  // Alternative way: Use eleventyComputed to build tagSlugMap once per page:
+  eleventyConfig.addGlobalData("eleventyComputed", {
+    tagSlugMap: data => {
+      const slugify = require("slugify");
+      const tagMap = data.tagMap || {};
+      const map = {};
+      Object.keys(tagMap).forEach(tag => {
+        map[slugify(tag, { lower: true, strict: true })] = tag;
+      });
+      return map;
+    }
   });
 
   eleventyConfig.addGlobalData('eleventyComputed', {
