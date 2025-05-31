@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tags - Reflections</title>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
@@ -13,23 +13,21 @@
   <header>
     <h1>Tags</h1>
     <nav>
-      <a href="/index.html">Home</a>
-      <a href="/about.html">About</a>
-      <a href="/posts.html">Posts</a>
-      <a href="/tags.html" class="active">Tags</a>
-      <a href="/newsletter.html">Newsletter</a>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="posts.html">Posts</a>
+      <a href="tags.html" class="active">Tags</a>
+      <a href="newsletter.html">Newsletter</a>
     </nav>
   </header>
 
-  <main style="max-width: 800px; margin: 3rem auto; padding: 0 1rem;">
+  <main>
     <div class="content">
       <h2>Browse by Tag</h2>
       <ul>
-        {% for tag in collections | tagList %}
-          <li>
-            <a href="/tags/{{ tag | slug }}/">{{ tag }}</a>
-          </li>
-        {% endfor %}
+        <li><a href="posts.html#philosophy">Philosophy</a></li>
+        <li><a href="posts.html#cosmology">Cosmology</a></li>
+        <li><a href="posts.html#shayari">Shayari</a></li>
       </ul>
     </div>
   </main>
@@ -39,6 +37,7 @@
   </footer>
 
   <script>
+    // Apply dark mode if it was previously enabled
     if (localStorage.getItem('dark-mode') === 'enabled') {
       document.body.classList.add('dark-mode');
     }
