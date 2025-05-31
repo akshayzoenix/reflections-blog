@@ -1,6 +1,6 @@
 ---
 pagination:
-  data: collections.tagMap | keys | map(tag => tag | slug)  # paginate over slugified tags
+  data: collections.tagMap | keys | map(tag => tag | slugify)
   size: 1
   alias: tagSlug
   addAllPagesToCollections: true
