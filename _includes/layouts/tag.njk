@@ -11,7 +11,7 @@
   <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
 
   <header>
-    <h1>Posts tagged "{{ tag }}"</h1>
+    <h1>Posts tagged <em>"{{ tag }}"</em></h1>
     <nav>
       <a href="/index.html">Home</a>
       <a href="/about.html">About</a>
@@ -22,13 +22,24 @@
   </header>
 
   <main style="max-width: 800px; margin: 3rem auto; padding: 0 1rem;">
-    <ul>
-      {% for post in posts %}
-        <li>
-          <a href="{{ post.url }}">{{ post.data.title }}</a> — <small>{{ post.date | date }}</small>
-        </li>
-      {% endfor %}
-    </ul>
+    <section>
+      {% if posts.length > 0 %}
+        <ul class="post-list">
+          {% for post in posts %}
+            <li style="margin-bottom: 1rem;">
+              <a href="{{ post.url }}" style="font-size: 1.2rem;">{{ post.data.title }}</a><br />
+              <small>{{ post.date | date('MMMM D, YYYY') }}</small>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No posts found for this tag.</p>
+      {% endif %}
+    </section>
+
+    <div style="margin-top: 2rem;">
+      <a href="/tags.html">← Back to all tags</a>
+    </div>
   </main>
 
   <footer>
