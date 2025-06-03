@@ -1,26 +1,31 @@
 {% extends "layouts/base.njk" %}
 
 {% block content %}
-<div class="posts">
-  <h2>Browse by Tag</h2>
-  <div class="tags">
-    <a href="/tags/philosophy/">Philosophy</a>
-    <a href="/tags/cosmology/">Cosmology</a>
-    <a href="/tags/shayari/">Shayari</a>
-    <a href="/tags/wisdom/">Wisdom</a>
+  <div class="posts">
+    <h2>Browse by Tag</h2>
+    <div class="tags">
+      <a href="/tags/philosophy/">Philosophy</a>
+      <a href="/tags/cosmology/">Cosmology</a>
+      <a href="/tags/shayari/">Shayari</a>
+      <a href="/tags/wisdom/">Wisdom</a>
+    </div>
   </div>
-</div>
 
-<div class="sidebar">
-  <div class="tags">
-    <h3>Tags</h3>
-    <a href="/tags/philosophy/">Philosophy</a>
-    <a href="/tags/cosmology/">Cosmology</a>
-    <a href="/tags/shayari/">Shayari</a>
-    <a href="/tags/wisdom/">Wisdom</a>
+  <div class="sidebar">
+    <div class="tags">
+      <h3>Tags</h3>
+      <a href="/tags/philosophy/">Philosophy</a>
+      <a href="/tags/cosmology/">Cosmology</a>
+      <a href="/tags/shayari/">Shayari</a>
+      <a href="/tags/wisdom/">Wisdom</a>
+    </div>
+    <div class="subscribe">
+      <h3>Subscribe</h3>
+      <p>Get the latest posts delivered straight to your inbox</p>
+      <form name="sidebar-newsletter" method="POST" data-netlify="true">
+        <input type="email" name="email" placeholder="Email address" required />
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
   </div>
-  <div class="subscribe">
-    <h3>Subscribe</h3>
-    <p>Get the latest posts delivered straight to your inbox</p>
-    <form name="sidebar-newsletter" method="POST" data-netlify="true">
-      <input type="email" name="email" placeholder="Emai
+{% endblock %}
