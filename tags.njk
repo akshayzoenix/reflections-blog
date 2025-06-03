@@ -1,77 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tags - Reflections</title>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <!-- Dark Mode Toggle button fixed top-right, exactly like index.html -->
-  <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+{% extends "layouts/base.njk" %}
 
-  <!-- Header with site title and nav -->
-  <header>
-    <h1>Reflections</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="posts.html">Posts</a>
-      <a href="tags.html" class="active">Tags</a>
-      <a href="newsletter.html">Newsletter</a>
-    </nav>
-  </header>
+{% block content %}
+<div class="posts">
+  <h2>Browse by Tag</h2>
+  <div class="tags">
+    <a href="/tags/philosophy/">Philosophy</a>
+    <a href="/tags/cosmology/">Cosmology</a>
+    <a href="/tags/shayari/">Shayari</a>
+    <a href="/tags/wisdom/">Wisdom</a>
+  </div>
+</div>
 
-  <main>
-    <!-- Main content section with same class names for flex layout -->
-    <div class="posts">
-      <h2>Browse by Tag</h2>
-      <div class="tags">
-        <a href="posts.html#philosophy">Philosophy</a>
-        <a href="posts.html#cosmology">Cosmology</a>
-        <a href="posts.html#shayari">Shayari</a>
-        <a href="posts.html#wisdom">Wisdom</a>
-      </div>
-    </div>
-
-    <!-- Sidebar exactly as on index.html -->
-    <div class="sidebar">
-      <div class="tags">
-        <h3>Tags</h3>
-        <a href="posts.html#philosophy">Philosophy</a>
-        <a href="posts.html#cosmology">Cosmology</a>
-        <a href="posts.html#shayari">Shayari</a>
-        <a href="posts.html#wisdom">Wisdom</a>
-      </div>
-      <div class="subscribe">
-        <h3>Subscribe</h3>
-        <p>Get the latest posts delivered straight to your inbox</p>
-        <input type="email" placeholder="Email address" />
-        <button>Subscribe</button>
-      </div>
-    </div>
-  </main>
-
-  <!-- Footer identical to index.html -->
-  <footer>
-    <p>&copy; 2025 Soch Se Shabd Tak</p>
-  </footer>
-
-  <!-- Dark mode toggle script exactly same -->
-  <script>
-    if (localStorage.getItem("dark-mode") === "enabled") {
-      document.body.classList.add("dark-mode");
-    }
-
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark-mode");
-      if (document.body.classList.contains("dark-mode")) {
-        localStorage.setItem("dark-mode", "enabled");
-      } else {
-        localStorage.setItem("dark-mode", "disabled");
-      }
-    }
-  </script>
-</body>
-</html>
+<div class="sidebar">
+  <div class="tags">
+    <h3>Tags</h3>
+    <a href="/tags/philosophy/">Philosophy</a>
+    <a href="/tags/cosmology/">Cosmology</a>
+    <a href="/tags/shayari/">Shayari</a>
+    <a href="/tags/wisdom/">Wisdom</a>
+  </div>
+  <div class="subscribe">
+    <h3>Subscribe</h3>
+    <p>Get the latest posts delivered straight to your inbox</p>
+    <form name="sidebar-newsletter" method="POST" data-netlify="true">
+      <input type="email" name="email" placeholder="Emai
