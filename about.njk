@@ -1,34 +1,24 @@
----
-layout: layouts/base.njk
-title: About - Reflections
----
+{% extends "layouts/base.njk" %}
 
-<div class="content">
-  <div class="posts">
-    <article class="post">
-      <h2>About This Blog</h2>
-      <p>
-        <strong>Reflections</strong> is a space for quiet thought and poetic exploration — a journal of musings on life, the cosmos, philosophy, and shayari. It blends English and Hindi writing, offering soulful narratives and timeless questions.
-      </p>
-      <p>
-        Whether you're wandering through stars or pondering silence, each post invites you to pause, reflect, and feel.
-      </p>
-    </article>
-  </div>
+{% block content %}
+<h2>About This Blog</h2>
 
-  <aside class="sidebar">
-    <div class="tags">
-      <h3>Tags</h3>
-      <a href="#">Philosophy</a>
-      <a href="#">Cosmology</a>
-      <a href="#">Shayari</a>
-      <a href="#">Wisdom</a>
-    </div>
-    <div class="subscribe">
-      <h3>Subscribe</h3>
-      <p>Get the latest posts delivered straight to your inbox</p>
-      <input type="email" placeholder="Email address" />
-      <button>Subscribe</button>
-    </div>
-  </aside>
-</div>
+<p><strong>Reflections</strong> is a space for quiet thought and poetic exploration — a journal of musings on life, the cosmos, philosophy, and shayari. It blends English and Hindi writing, offering soulful narratives and timeless questions.</p>
+
+<p>Whether you're wandering through stars or pondering silence, each post invites you to pause, reflect, and feel.</p>
+
+<h3>Tags</h3>
+<ul>
+  <li><a href="/tags/philosophy/">Philosophy</a></li>
+  <li><a href="/tags/cosmology/">Cosmology</a></li>
+  <li><a href="/tags/shayari/">Shayari</a></li>
+  <li><a href="/tags/wisdom/">Wisdom</a></li>
+</ul>
+
+<h3>Subscribe</h3>
+<p>Get the latest posts delivered straight to your inbox</p>
+<form name="newsletter" method="POST" data-netlify="true">
+  <input type="email" name="email" placeholder="Email address" required />
+  <button type="submit">Subscribe</button>
+</form>
+{% endblock %}
