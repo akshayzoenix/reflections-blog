@@ -31,11 +31,23 @@ collections:
         name: "draft"
         widget: "boolean"
         default: false            # Optional — mark post as draft
+
       - label: "Tags"
         name: "tags"
-        widget: "list"
-        allow_add: true           # Allow adding multiple tags (list of strings)
+        widget: "select"
+        multiple: true
+        options:
+          - philosophy
+          - cosmology
+          - shayari
+          - wisdom
+          - poetry
+          - introspection
+          - spirituality
+          - hindi
+          - english
         required: false           # Optional — you can skip if no tags
+
       - label: "Body"
         name: "body"
         widget: "markdown"        # Main post content (Markdown editor)
