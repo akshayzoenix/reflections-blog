@@ -6,16 +6,15 @@ backend:
   branch: main
   client_id: Ov23liFPuj77LTi8G7YK
 
-# Where uploaded media (images) are stored in the repo
-media_folder: "images/uploads"    # Repo folder where images are saved
-public_folder: "/images/uploads"  # Public URL path to access images
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
 
 collections:
-  - name: "posts"                 # Internal collection name (used by CMS)
-    label: "Blog Posts"           # Label shown in the CMS sidebar
-    folder: "posts"               # Folder where Markdown files are saved
-    create: true                  # Allow creating new files from CMS
-    slug: "{{slug}}"              # Slug format (auto-generated from title or input)
+  - name: "posts"
+    label: "Blog Posts"
+    folder: "posts"
+    create: true
+    slug: "{{slug}}"
     fields:
       - label: "Title"
         name: "title"
@@ -26,28 +25,22 @@ collections:
       - label: "Featured Image"
         name: "featured_image"
         widget: "image"
-        required: false           # Optional — upload images from desktop into media_folder
+        required: false
       - label: "Draft"
         name: "draft"
         widget: "boolean"
-        default: false            # Optional — mark post as draft
-
+        default: false
       - label: "Tags"
         name: "tags"
         widget: "select"
         multiple: true
         options:
           - philosophy
-          - cosmology
+          - cosmos
           - shayari
           - wisdom
-          - poetry
-          - introspection
-          - spirituality
-          - hindi
-          - english
-        required: false           # Optional — you can skip if no tags
-
+        hint: "Select one or more tags that describe this post"
+        required: false
       - label: "Body"
         name: "body"
-        widget: "markdown"        # Main post content (Markdown editor)
+        widget: "markdown"
