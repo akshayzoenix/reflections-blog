@@ -54,7 +54,8 @@
         color: #222 !important;
       }
 
-      .nc-editor-widget, .nc-collectionPage-container {
+      .nc-editor-widget,
+      .nc-collectionPage-container {
         background-color: #fff9f3 !important;
         border-radius: 8px;
         padding: 1rem;
@@ -62,6 +63,18 @@
 
       .nc-editor-controlPane {
         background-color: #fdfaf6 !important;
+      }
+
+      /* FIX: Move the editor toolbar down to avoid blocking nav */
+      .nc-entryEditor-toolbar {
+        margin-top: 60px !important;
+        z-index: 999;
+        position: relative;
+      }
+
+      .nc-app-header {
+        z-index: 1000 !important;
+        position: relative;
       }
     </style>
   </head>
