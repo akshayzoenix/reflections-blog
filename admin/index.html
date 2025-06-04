@@ -65,16 +65,20 @@
         background-color: #fdfaf6 !important;
       }
 
-      /* FIX: Move the editor toolbar down to avoid blocking nav */
+      /* Final fix: Shift toolbar down to not block nav */
       .nc-entryEditor-toolbar {
-        margin-top: 60px !important;
-        z-index: 999;
-        position: relative;
+        position: fixed !important;
+        top: 60px !important;
+        width: calc(100% - 4rem) !important;
+        z-index: 1001 !important;
+        background-color: #f4f1ea !important;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        margin-left: 2rem !important;
       }
 
-      .nc-app-header {
-        z-index: 1000 !important;
-        position: relative;
+      .nc-editor-main {
+        margin-top: 120px !important;
       }
     </style>
   </head>
