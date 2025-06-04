@@ -6,7 +6,7 @@ backend:
   branch: main
   client_id: Ov23liFPuj77LTi8G7YK
 
-publish_mode: editorial_workflow  # Enables "Save as Draft" functionality
+publish_mode: editorial_workflow  # ✅ Enables "Save as Draft" and workflow tab
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
@@ -28,7 +28,7 @@ collections:
         name: "featured_image"
         widget: "image"
         required: false
-      - label: "Draft"
+      - label: "Draft"               # ✅ Added this boolean field
         name: "draft"
         widget: "boolean"
         default: false
@@ -46,4 +46,3 @@ collections:
       - label: "Body"
         name: "body"
         widget: "markdown"
-
