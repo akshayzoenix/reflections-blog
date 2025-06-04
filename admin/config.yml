@@ -6,6 +6,8 @@ backend:
   branch: main
   client_id: Ov23liFPuj77LTi8G7YK
 
+publish_mode: editorial_workflow  # Enables "Save as Draft" functionality
+
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
@@ -45,7 +47,3 @@ collections:
         name: "body"
         widget: "markdown"
 
-editor:
-  preview: true
-  styles:
-    - /admin/custom-preview.css
