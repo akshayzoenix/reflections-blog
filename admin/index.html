@@ -69,24 +69,21 @@
   <div id="nc-root"></div>
 
   <script src="https://unpkg.com/netlify-cms@2.10.192/dist/netlify-cms.js"></script>
+
   <script>
-    // Wait until the DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', function () {
-      const shiftToolbar = () => {
+    document.addEventListener("DOMContentLoaded", function () {
+      const observer = new MutationObserver(() => {
         const toolbar = document.querySelector('.nc-entryEditor-toolbar');
-        const editorMain = document.querySelector('.nc-editor-main');
-
-        if (toolbar && editorMain) {
-          toolbar.style.position = 'relative';
-          toolbar.style.marginTop = '60px';
-          editorMain.style.marginTop = '40px';
-        } else {
-          // Try again after a short delay if toolbar not loaded yet
-          setTimeout(shiftToolbar, 300);
+        if (toolbar && !toolbar.dataset.shifted) {
+          toolbar.style.transform = 'translateY(30px)';
+          toolbar.dataset.shifted = 'true';
         }
-      };
+      });
 
-      shiftToolbar();
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
     });
   </script>
 </body>
