@@ -4,7 +4,7 @@
   <div class="posts">
     <h2>Browse by Tag</h2>
     <div class="tags">
-      {% for tag in collections.tagMap | keys %}
+      {% for tag in collections.tagList %}
         <a href="/tags/{{ tag | slugify }}/">{{ tag }}</a>
       {% endfor %}
     </div>
@@ -13,7 +13,7 @@
   <div class="sidebar">
     <div class="tags">
       <h3>Tags</h3>
-      {% for tag in collections.tagMap | keys %}
+      {% for tag in collections.tagList %}
         <a href="/tags/{{ tag | slugify }}/">{{ tag }}</a>
       {% endfor %}
     </div>
