@@ -10,11 +10,18 @@ layout: "layouts/base.njk"
 
 <h2>Posts tagged “{{ tag }}”</h2>
 <ul>
-  {% for post in collections.tagMap[tag] %}
-    <li>
-      <a href="{{ post.url }}">{{ post.data.title }}</a>
-      <small>{{ post.date | date }}</small>
-    </li>
+  {% for post in collections.posts %}
+    {% if post.data.tags %}
+      {% for rawTag in post.data.tags %}
+        {% if rawTag | slugify == tag | slugify %}
+          <li>
+            <a href="{{ post.url }}">{{ post.data.title }}</a>
+            <small>{{ post.date | date }}</small>
+          </li>
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
   {% endfor %}
 </ul>
 
