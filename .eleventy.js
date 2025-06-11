@@ -36,7 +36,6 @@ module.exports = function(eleventyConfig) {
       .replace(/^-+/, '')
       .replace(/-+$/, '')
   );
-  
 
   // --- Filter: Titlecase (for display) ---
   eleventyConfig.addFilter("titlecase", str =>
@@ -54,14 +53,13 @@ module.exports = function(eleventyConfig) {
       .reverse()
   );
 
-  // --- Collection: Group posts by tag (raw, normalized keys) ---
+  // --- Collection: Group posts by tag (normalized & Title-cased) ---
   eleventyConfig.addCollection("tagMap", collectionApi => {
     let map = {};
     collectionApi.getFilteredByGlob("posts/*.md")
       .filter(post => !post.data.draft && Array.isArray(post.data.tags))
       .forEach(post => {
         post.data.tags.forEach(rawTag => {
-          // Normalize key (lowercase), display titlecase
           let key = rawTag.toString().toLowerCase();
           let display = key.charAt(0).toUpperCase() + key.slice(1);
           if (!map[display]) map[display] = [];
@@ -71,10 +69,19 @@ module.exports = function(eleventyConfig) {
     return map;
   });
 
-  // --- Collection: Unique tag list (from tagMap keys) ---
+  // --- Collection: Unique tag list (normalized & Title-cased) ---
   eleventyConfig.addCollection("tagList", collectionApi => {
-    let tags = new Set(Object.keys(collectionApi.getCollection("tagMap")));
-    return [...tags];
+    let tagSet = new Set();
+    collectionApi.getFilteredByGlob("posts/*.md")
+      .filter(post => !post.data.draft && Array.isArray(post.data.tags))
+      .forEach(post => {
+        post.data.tags.forEach(rawTag => {
+          let key = rawTag.toString().toLowerCase();
+          let display = key.charAt(0).toUpperCase() + key.slice(1);
+          tagSet.add(display);
+        });
+      });
+    return [...tagSet];
   });
 
   // --- Auto-layout switcher based on input path ---
