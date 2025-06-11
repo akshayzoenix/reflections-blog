@@ -31,27 +31,27 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter("titlecase", str =>
     str.toString().toLowerCase()
       .split(' ')
-      .map(w => w[0].toUpperCase()+w.slice(1))
+      .map(w => w[0].toUpperCase() + w.slice(1))
       .join(' ')
   );
   eleventyConfig.addFilter("stripHtml", value =>
-    (value||"").replace(/<[^>]+>/g, "").replace(/\s+/g," ").trim()
+    (value || "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim()
   );
-  eleventyConfig.addFilter("truncate", (value, length=150) => {
-    if(!value) return "";
-    let s = value.slice(0,length);
-    return (value.length>length)? s+"…": s;
+  eleventyConfig.addFilter("truncate", (value, length = 150) => {
+    if (!value) return "";
+    let s = value.slice(0, length);
+    return (value.length > length) ? s + "…" : s;
   });
 
   // 4. Collections
-  // 4.1 All non-draft posts
+  // 4.1 All non-draft posts, newest first
   eleventyConfig.addCollection("posts", c =>
     c.getFilteredByGlob("posts/*.md")
      .filter(p => !p.data.draft)
      .reverse()
   );
 
-  // 4.2 Group posts by tag
+  // 4.2 Group posts by tag (normalized & Title-cased)
   eleventyConfig.addCollection("tagMap", c => {
     let map = {};
     c.getFilteredByGlob("posts/*.md")
@@ -59,8 +59,8 @@ module.exports = function(eleventyConfig) {
      .forEach(p => {
        p.data.tags.forEach(raw => {
          let key = raw.toString().toLowerCase();
-         let display = key[0].toUpperCase() + key.slice(1);
-         (map[display] = map[display]||[]).push(p);
+         let display = key.charAt(0).toUpperCase() + key.slice(1);
+         (map[display] = map[display] || []).push(p);
        });
      });
     return map;
@@ -74,23 +74,35 @@ module.exports = function(eleventyConfig) {
      .forEach(p => {
        p.data.tags.forEach(raw => {
          let key = raw.toString().toLowerCase();
-         let display = key[0].toUpperCase() + key.slice(1);
+         let display = key.charAt(0).toUpperCase() + key.slice(1);
          set.add(display);
        });
      });
     return [...set];
   });
 
-  // 5. Auto-layout for posts
+  // 5. Auto-layout: honor front-matter, else posts use post.njk, else base.njk
   eleventyConfig.addGlobalData("eleventyComputed", {
-    layout: data =>
-      data.page.inputPath.includes("/posts/")
-        ? "layouts/post.njk"
-        : data.layout || "layouts/base.njk"
+    layout: data => {
+      // 1) If a layout is explicitly set in front-matter, use it
+      if (data.layout) {
+        return data.layout;
+      }
+      // 2) Otherwise, if this is a post, use the post layout
+      if (data.page.inputPath && data.page.inputPath.includes("/posts/")) {
+        return "layouts/post.njk";
+      }
+      // 3) Otherwise, fall back to your base layout
+      return "layouts/base.njk";
+    }
   });
 
-  // 6. Return dirs
+  // 6. Directory settings
   return {
-    dir: { input: ".", includes: "_includes", output: "_site" }
+    dir: {
+      input: ".",
+      includes: "_includes",
+      output: "_site"
+    }
   };
 };
