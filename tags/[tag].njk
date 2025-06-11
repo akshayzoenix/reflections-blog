@@ -12,11 +12,12 @@ eleventyExcludeFromCollections: true
 {% block content %}
   <div class="posts">
     <h2>Posts tagged “{{ tag }}”</h2>
-    <ul>
+    <ul class="tag-post-list">
       {% for post in collections.tagMap[tag] %}
-        <li>
-          <a href="{{ post.url }}">{{ post.data.title }}</a>
+        <li class="tag-post-excerpt">
+          <a href="{{ post.url }}"><strong>{{ post.data.title }}</strong></a>
           <small>{{ post.date | date }}</small>
+          <p>{{ post.templateContent | stripHtml | truncate(200) }}</p>
         </li>
       {% endfor %}
     </ul>
