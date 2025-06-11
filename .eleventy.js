@@ -1,7 +1,7 @@
 const markdownIt = require("markdown-it");
 
 module.exports = function(eleventyConfig) {
-  // Markdown configuration
+  // --- Markdown Configuration ---
   const mdOptions = {
     html: true,
     breaks: true,
@@ -9,12 +9,12 @@ module.exports = function(eleventyConfig) {
   };
   eleventyConfig.setLibrary("md", markdownIt(mdOptions));
 
-  // Passthrough copies
+  // --- Passthrough Copy (Netlify CMS) ---
   eleventyConfig.addPassthroughCopy("styles.css");
   eleventyConfig.addPassthroughCopy("admin");
   eleventyConfig.addPassthroughCopy("images");
 
-  // Filter: Format date
+  // --- Filter: Format Date ---
   eleventyConfig.addFilter("date", (dateObj) => {
     if (!(dateObj instanceof Date)) {
       dateObj = new Date(dateObj);
@@ -26,56 +26,57 @@ module.exports = function(eleventyConfig) {
     });
   });
 
-  // Filter: Slugify strings for URLs
-  eleventyConfig.addFilter("slugify", function(str) {
-    return str
-      .toString()
+  // --- Filter: Slugify (for URLs) ---
+  eleventyConfig.addFilter("slugify", str =>
+    str.toString()
       .toLowerCase()
       .replace(/\s+/g, '-')
       .replace(/[^\w\-]+/g, '')
       .replace(/\-\-+/g, '-')
       .replace(/^-+/, '')
-      .replace(/-+$/, '');
-  });
+      .replace(/-+$/, '')
+  );
 
-  // Collection: All non-draft posts, newest first
-  eleventyConfig.addCollection("posts", function(collectionApi) {
-    return collectionApi.getFilteredByGlob("posts/*.md")
+  // --- Filter: Titlecase (for display) ---
+  eleventyConfig.addFilter("titlecase", str =>
+    str.toString()
+      .toLowerCase()
+      .split(' ')
+      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(' ')
+  );
+
+  // --- Collection: All non-draft posts, newest first ---
+  eleventyConfig.addCollection("posts", collectionApi =>
+    collectionApi.getFilteredByGlob("posts/*.md")
       .filter(post => !post.data.draft)
-      .reverse();
-  });
+      .reverse()
+  );
 
-  // Collection: Unique tag list (always includes these defaults)
-  eleventyConfig.addCollection("tagList", function(collectionApi) {
-    const tagSet = new Set([
-      "Philosophy",
-      "Reflections",
-      "Shayari",
-      "Cosmology"
-    ]);
+  // --- Collection: Group posts by tag (raw, normalized keys) ---
+  eleventyConfig.addCollection("tagMap", collectionApi => {
+    let map = {};
     collectionApi.getFilteredByGlob("posts/*.md")
-      .filter(post => !post.data.draft && post.data.tags)
+      .filter(post => !post.data.draft && Array.isArray(post.data.tags))
       .forEach(post => {
-        post.data.tags.forEach(tag => tagSet.add(tag));
-      });
-    return [...tagSet];
-  });
-
-  // Collection: Group non-draft posts by tag
-  eleventyConfig.addCollection("tagMap", function(collectionApi) {
-    let tagMap = {};
-    collectionApi.getFilteredByGlob("posts/*.md")
-      .filter(post => !post.data.draft && post.data.tags)
-      .forEach(post => {
-        post.data.tags.forEach(tag => {
-          if (!tagMap[tag]) tagMap[tag] = [];
-          tagMap[tag].push(post);
+        post.data.tags.forEach(rawTag => {
+          // Normalize key (lowercase), display titlecase
+          let key = rawTag.toString().toLowerCase();
+          let display = key.charAt(0).toUpperCase() + key.slice(1);
+          if (!map[display]) map[display] = [];
+          map[display].push(post);
         });
       });
-    return tagMap;
+    return map;
   });
 
-  // Auto-layout switcher based on folder path
+  // --- Collection: Unique tag list (from tagMap keys) ---
+  eleventyConfig.addCollection("tagList", collectionApi => {
+    let tags = new Set(Object.keys(collectionApi.getCollection("tagMap")));
+    return [...tags];
+  });
+
+  // --- Auto-layout switcher based on input path ---
   eleventyConfig.addGlobalData("eleventyComputed", {
     layout: data => {
       if (data.page && data.page.inputPath && data.page.inputPath.includes("/posts/")) {
@@ -85,10 +86,11 @@ module.exports = function(eleventyConfig) {
     }
   });
 
+  // --- Return Directory Settings ---
   return {
     dir: {
       input: ".",            // Project root
-      includes: "_includes", // Layouts and partials
+      includes: "_includes", // Layouts & partials
       output: "_site"        // Build folder
     }
   };
