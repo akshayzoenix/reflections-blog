@@ -26,20 +26,16 @@ module.exports = function(eleventyConfig) {
     });
   });
 
-  // Filter: Unique tag list (forces some default tags to always appear)
-  eleventyConfig.addFilter("tagList", function(collections) {
-    const tagSet = new Set([
-      "Philosophy",
-      "Reflections",
-      "Shayari",
-      "Cosmology"
-    ]);
-    collections.posts.forEach(post => {
-      if ("tags" in post.data) {
-        post.data.tags.forEach(tag => tagSet.add(tag));
-      }
-    });
-    return [...tagSet];
+  // Filter: Slugify strings for URLs
+  eleventyConfig.addFilter("slugify", function(str) {
+    return str
+      .toString()
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w\-]+/g, '')
+      .replace(/\-\-+/g, '-')
+      .replace(/^-+/, '')
+      .replace(/-+$/, '');
   });
 
   // Collection: All non-draft posts, newest first
@@ -49,17 +45,33 @@ module.exports = function(eleventyConfig) {
       .reverse();
   });
 
+  // Collection: Unique tag list (always includes these defaults)
+  eleventyConfig.addCollection("tagList", function(collectionApi) {
+    const tagSet = new Set([
+      "Philosophy",
+      "Reflections",
+      "Shayari",
+      "Cosmology"
+    ]);
+    collectionApi.getFilteredByGlob("posts/*.md")
+      .filter(post => !post.data.draft && post.data.tags)
+      .forEach(post => {
+        post.data.tags.forEach(tag => tagSet.add(tag));
+      });
+    return [...tagSet];
+  });
+
   // Collection: Group non-draft posts by tag
   eleventyConfig.addCollection("tagMap", function(collectionApi) {
     let tagMap = {};
-    collectionApi.getFilteredByGlob("posts/*.md").forEach(post => {
-      if (!post.data.draft && post.data.tags) {
+    collectionApi.getFilteredByGlob("posts/*.md")
+      .filter(post => !post.data.draft && post.data.tags)
+      .forEach(post => {
         post.data.tags.forEach(tag => {
           if (!tagMap[tag]) tagMap[tag] = [];
           tagMap[tag].push(post);
         });
-      }
-    });
+      });
     return tagMap;
   });
 
