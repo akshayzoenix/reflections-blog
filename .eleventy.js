@@ -1,105 +1,84 @@
 const markdownIt = require("markdown-it");
 
 module.exports = function(eleventyConfig) {
-  // --- Markdown Configuration ---
-  const mdOptions = {
+  // 1. Markdown with Markdown-It
+  eleventyConfig.setLibrary("md", markdownIt({
     html: true,
     breaks: true,
     linkify: true
-  };
-  eleventyConfig.setLibrary("md", markdownIt(mdOptions));
+  }));
 
-  // --- Passthrough Copy (Netlify CMS) ---
+  // 2. Passthrough Copy (for CMS, images, CSS)
   eleventyConfig.addPassthroughCopy("styles.css");
   eleventyConfig.addPassthroughCopy("admin");
   eleventyConfig.addPassthroughCopy("images");
 
-  // --- Filter: Format Date ---
-  eleventyConfig.addFilter("date", (dateObj) => {
-    if (!(dateObj instanceof Date)) {
-      dateObj = new Date(dateObj);
-    }
+  // 3. Filters
+  eleventyConfig.addFilter("date", dateObj => {
+    if (!(dateObj instanceof Date)) dateObj = new Date(dateObj);
     return dateObj.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+      year: "numeric", month: "long", day: "numeric"
     });
   });
-
-  // --- Filter: Slugify (for URLs) ---
   eleventyConfig.addFilter("slugify", str =>
-    str.toString()
-      .toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/[^\w\-]+/g, '')
-      .replace(/\-\-+/g, '-')
-      .replace(/^-+/, '')
-      .replace(/-+$/, '')
+    str.toString().toLowerCase()
+       .replace(/\s+/g, '-')
+       .replace(/[^\w\-]+/g, '')
+       .replace(/\-\-+/g, '-')
+       .replace(/^-+/, '')
+       .replace(/-+$/, '')
+  );
+  eleventyConfig.addFilter("stripHtml", value =>
+    (value||"").replace(/<[^>]+>/g, "").replace(/\s+/g," ").trim()
+  );
+  eleventyConfig.addFilter("truncate", (value, length = 150) => {
+    if (!value) return "";
+    let s = value.slice(0, length);
+    return (value.length > length) ? s + "…" : s;
+  });
+
+  // 4. Collections
+  eleventyConfig.addCollection("posts", c =>
+    c.getFilteredByGlob("posts/*.md")
+     .filter(p => !p.data.draft)
+     .reverse()
   );
 
-  // --- Filter: Titlecase (for display) ---
-  eleventyConfig.addFilter("titlecase", str =>
-    str.toString()
-      .toLowerCase()
-      .split(' ')
-      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-      .join(' ')
-  );
-
-  // --- Collection: All non-draft posts, newest first ---
-  eleventyConfig.addCollection("posts", collectionApi =>
-    collectionApi.getFilteredByGlob("posts/*.md")
-      .filter(post => !post.data.draft)
-      .reverse()
-  );
-
-  // --- Collection: Group posts by tag (normalized & Title-cased) ---
-  eleventyConfig.addCollection("tagMap", collectionApi => {
+  eleventyConfig.addCollection("tagMap", c => {
     let map = {};
-    collectionApi.getFilteredByGlob("posts/*.md")
-      .filter(post => !post.data.draft && Array.isArray(post.data.tags))
-      .forEach(post => {
-        post.data.tags.forEach(rawTag => {
-          let key = rawTag.toString().toLowerCase();
-          let display = key.charAt(0).toUpperCase() + key.slice(1);
-          if (!map[display]) map[display] = [];
-          map[display].push(post);
-        });
-      });
+    c.getFilteredByGlob("posts/*.md")
+     .filter(p => !p.data.draft && Array.isArray(p.data.tags))
+     .forEach(p => {
+       p.data.tags.forEach(raw => {
+         let key = raw.toString().toLowerCase();
+         let display = key.charAt(0).toUpperCase() + key.slice(1);
+         (map[display] = map[display]||[]).push(p);
+       });
+     });
     return map;
   });
 
-  // --- Collection: Unique tag list (normalized & Title-cased) ---
-  eleventyConfig.addCollection("tagList", collectionApi => {
-    let tagSet = new Set();
-    collectionApi.getFilteredByGlob("posts/*.md")
-      .filter(post => !post.data.draft && Array.isArray(post.data.tags))
-      .forEach(post => {
-        post.data.tags.forEach(rawTag => {
-          let key = rawTag.toString().toLowerCase();
-          let display = key.charAt(0).toUpperCase() + key.slice(1);
-          tagSet.add(display);
-        });
-      });
-    return [...tagSet];
+  eleventyConfig.addCollection("tagList", c => {
+    let set = new Set();
+    c.getFilteredByGlob("posts/*.md")
+     .filter(p => !p.data.draft && Array.isArray(p.data.tags))
+     .forEach(p => {
+       p.data.tags.forEach(raw => {
+         let key = raw.toString().toLowerCase();
+         let display = key.charAt(0).toUpperCase() + key.slice(1);
+         set.add(display);
+       });
+     });
+    return [...set];
   });
 
-  // --- Auto-layout switcher based on input path ---
-  eleventyConfig.addGlobalData("eleventyComputed", {
-    layout: data => {
-      if (data.page && data.page.inputPath && data.page.inputPath.includes("/posts/")) {
-        return "layouts/post.njk";
-      }
-      return data.layout || null;
-    }
-  });
-
-  // --- Return Directory Settings ---
+  // 5. No computed layout – rely on each page’s front-matter
+  // 6. Directory settings
   return {
     dir: {
-      input: ".",            // Project root
-      includes: "_includes", // Layouts & partials
-      output: "_site"        // Build folder
+      input: ".",
+      includes: "_includes",
+      output: "_site"
     }
   };
 };
