@@ -36,6 +36,7 @@ module.exports = function(eleventyConfig) {
       .replace(/^-+/, '')
       .replace(/-+$/, '')
   );
+  
 
   // --- Filter: Titlecase (for display) ---
   eleventyConfig.addFilter("titlecase", str =>
