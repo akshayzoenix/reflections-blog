@@ -1,28 +1,25 @@
 const markdownIt = require("markdown-it");
 
 module.exports = function(eleventyConfig) {
-  // --- 1. Markdown Configuration ---
+  // 1. Markdown
   eleventyConfig.setLibrary("md", markdownIt({
     html: true,
     breaks: true,
     linkify: true
   }));
 
-  // --- 2. Passthrough Copy (Netlify CMS) ---
+  // 2. Passthrough Copy
   eleventyConfig.addPassthroughCopy("styles.css");
   eleventyConfig.addPassthroughCopy("admin");
   eleventyConfig.addPassthroughCopy("images");
 
-  // --- 3. Filters ---
-  // 3.1. Format Date
+  // 3. Filters
   eleventyConfig.addFilter("date", dateObj => {
     if (!(dateObj instanceof Date)) dateObj = new Date(dateObj);
     return dateObj.toLocaleDateString("en-US", {
       year: "numeric", month: "long", day: "numeric"
     });
   });
-
-  // 3.2. Slugify for URLs
   eleventyConfig.addFilter("slugify", str =>
     str.toString().toLowerCase()
       .replace(/\s+/g, '-')
@@ -31,60 +28,60 @@ module.exports = function(eleventyConfig) {
       .replace(/^-+/, '')
       .replace(/-+$/, '')
   );
-
-  // 3.3. Titlecase for display
   eleventyConfig.addFilter("titlecase", str =>
     str.toString().toLowerCase()
       .split(' ')
-      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+      .map(w => w[0].toUpperCase()+w.slice(1))
       .join(' ')
   );
-
-  // 3.4. Strip HTML tags
-  eleventyConfig.addFilter("stripHtml", value => {
-    return (value || "")
-      .replace(/<[^>]+>/g, "")
-      .replace(/\s+/g, " ")
-      .trim();
+  eleventyConfig.addFilter("stripHtml", value =>
+    (value||"").replace(/<[^>]+>/g, "").replace(/\s+/g," ").trim()
+  );
+  eleventyConfig.addFilter("truncate", (value, length=150) => {
+    if(!value) return "";
+    let s = value.slice(0,length);
+    return (value.length>length)? s+"…": s;
   });
 
-  // 3.5. Truncate text with ellipsis
-  eleventyConfig.addFilter("truncate", (value, length = 150) => {
-    if (!value) return "";
-    let str = value.slice(0, length);
-    return (value.length > length) ? (str + "…") : str;
-  });
-
-  // --- 4. Collections ---
-  // 4.1. All non-draft posts, newest first
-  eleventyConfig.addCollection("posts", collectionApi =>
-    collectionApi.getFilteredByGlob("posts/*.md")
-      .filter(post => !post.data.draft)
-      .reverse()
+  // 4. Collections
+  // 4.1 All non-draft posts
+  eleventyConfig.addCollection("posts", c =>
+    c.getFilteredByGlob("posts/*.md")
+     .filter(p => !p.data.draft)
+     .reverse()
   );
 
-  // 4.2. Group posts by normalized, Title-cased tag
-  eleventyConfig.addCollection("tagMap", collectionApi => {
+  // 4.2 Group posts by tag
+  eleventyConfig.addCollection("tagMap", c => {
     let map = {};
-    collectionApi.getFilteredByGlob("posts/*.md")
-      .filter(post => !post.data.draft && Array.isArray(post.data.tags))
-      .forEach(post => {
-        post.data.tags.forEach(rawTag => {
-          let key = rawTag.toString().toLowerCase();
-          let display = key.charAt(0).toUpperCase() + key.slice(1);
-          if (!map[display]) map[display] = [];
-          map[display].push(post);
-        });
-      });
+    c.getFilteredByGlob("posts/*.md")
+     .filter(p => !p.data.draft && Array.isArray(p.data.tags))
+     .forEach(p => {
+       p.data.tags.forEach(raw => {
+         let key = raw.toString().toLowerCase();
+         let display = key[0].toUpperCase() + key.slice(1);
+         (map[display] = map[display]||[]).push(p);
+       });
+     });
     return map;
   });
 
-  // 4.3. Unique tag list (just the keys of tagMap)
-  eleventyConfig.addCollection("tagList", collectionApi =>
-    Object.keys(collectionApi.getCollection("tagMap"))
-  );
+  // 4.3 Unique tag list
+  eleventyConfig.addCollection("tagList", c => {
+    let set = new Set();
+    c.getFilteredByGlob("posts/*.md")
+     .filter(p => !p.data.draft && Array.isArray(p.data.tags))
+     .forEach(p => {
+       p.data.tags.forEach(raw => {
+         let key = raw.toString().toLowerCase();
+         let display = key[0].toUpperCase() + key.slice(1);
+         set.add(display);
+       });
+     });
+    return [...set];
+  });
 
-  // --- 5. Auto-layout for posts vs pages ---
+  // 5. Auto-layout for posts
   eleventyConfig.addGlobalData("eleventyComputed", {
     layout: data =>
       data.page.inputPath.includes("/posts/")
@@ -92,12 +89,8 @@ module.exports = function(eleventyConfig) {
         : data.layout || "layouts/base.njk"
   });
 
-  // --- 6. Directory settings ---
+  // 6. Return dirs
   return {
-    dir: {
-      input: ".",            // Project root
-      includes: "_includes", // Layouts & partials
-      output: "_site"        // Build folder
-    }
+    dir: { input: ".", includes: "_includes", output: "_site" }
   };
 };
