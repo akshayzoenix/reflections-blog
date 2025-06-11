@@ -37,10 +37,10 @@ collections:
         widget: "select"
         multiple: true
         options:
-          - philosophy
-          - cosmos
-          - shayari
-          - wisdom
+          - Philosophy
+          - Cosmos
+          - Shayari
+          - Wisdom
         hint: "Select one or more tags that describe this post"
         required: false
       - label: "Body"
