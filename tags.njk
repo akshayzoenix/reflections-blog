@@ -4,20 +4,18 @@
   <div class="posts">
     <h2>Browse by Tag</h2>
     <div class="tags">
-      <a href="/tags/philosophy/">Philosophy</a>
-      <a href="/tags/cosmology/">Cosmology</a>
-      <a href="/tags/shayari/">Shayari</a>
-      <a href="/tags/wisdom/">Wisdom</a>
+      {% for tag in collections.tagMap | keys %}
+        <a href="/tags/{{ tag | slugify }}/">{{ tag }}</a>
+      {% endfor %}
     </div>
   </div>
 
   <div class="sidebar">
     <div class="tags">
       <h3>Tags</h3>
-      <a href="/tags/philosophy/">Philosophy</a>
-      <a href="/tags/cosmology/">Cosmology</a>
-      <a href="/tags/shayari/">Shayari</a>
-      <a href="/tags/wisdom/">Wisdom</a>
+      {% for tag in collections.tagMap | keys %}
+        <a href="/tags/{{ tag | slugify }}/">{{ tag }}</a>
+      {% endfor %}
     </div>
     <div class="subscribe">
       <h3>Subscribe</h3>
