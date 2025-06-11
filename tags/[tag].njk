@@ -3,8 +3,8 @@ pagination:
   data: collections.tagList
   size: 1
   alias: tag
-  addAllPagesToCollections: false
-  permalink: "/tags/{{ tag | slugify }}/"
+permalink: "/tags/{{ tag | slugify }}/"
+eleventyExcludeFromCollections: true
 layout: "layouts/base.njk"
 ---
 
