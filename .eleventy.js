@@ -1,35 +1,30 @@
 const markdownIt = require("markdown-it");
 
 module.exports = function(eleventyConfig) {
-  // --- Markdown Configuration ---
-  const mdOptions = {
+  // --- 1. Markdown Configuration ---
+  eleventyConfig.setLibrary("md", markdownIt({
     html: true,
     breaks: true,
     linkify: true
-  };
-  eleventyConfig.setLibrary("md", markdownIt(mdOptions));
+  }));
 
-  // --- Passthrough Copy (Netlify CMS) ---
+  // --- 2. Passthrough Copy (Netlify CMS) ---
   eleventyConfig.addPassthroughCopy("styles.css");
   eleventyConfig.addPassthroughCopy("admin");
   eleventyConfig.addPassthroughCopy("images");
 
-  // --- Filter: Format Date ---
-  eleventyConfig.addFilter("date", (dateObj) => {
-    if (!(dateObj instanceof Date)) {
-      dateObj = new Date(dateObj);
-    }
+  // --- 3. Filters ---
+  // 3.1. Format Date
+  eleventyConfig.addFilter("date", dateObj => {
+    if (!(dateObj instanceof Date)) dateObj = new Date(dateObj);
     return dateObj.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+      year: "numeric", month: "long", day: "numeric"
     });
   });
 
-  // --- Filter: Slugify (for URLs) ---
+  // 3.2. Slugify for URLs
   eleventyConfig.addFilter("slugify", str =>
-    str.toString()
-      .toLowerCase()
+    str.toString().toLowerCase()
       .replace(/\s+/g, '-')
       .replace(/[^\w\-]+/g, '')
       .replace(/\-\-+/g, '-')
@@ -37,23 +32,38 @@ module.exports = function(eleventyConfig) {
       .replace(/-+$/, '')
   );
 
-  // --- Filter: Titlecase (for display) ---
+  // 3.3. Titlecase for display
   eleventyConfig.addFilter("titlecase", str =>
-    str.toString()
-      .toLowerCase()
+    str.toString().toLowerCase()
       .split(' ')
       .map(w => w.charAt(0).toUpperCase() + w.slice(1))
       .join(' ')
   );
 
-  // --- Collection: All non-draft posts, newest first ---
+  // 3.4. Strip HTML tags
+  eleventyConfig.addFilter("stripHtml", value => {
+    return (value || "")
+      .replace(/<[^>]+>/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  });
+
+  // 3.5. Truncate text with ellipsis
+  eleventyConfig.addFilter("truncate", (value, length = 150) => {
+    if (!value) return "";
+    let str = value.slice(0, length);
+    return (value.length > length) ? (str + "…") : str;
+  });
+
+  // --- 4. Collections ---
+  // 4.1. All non-draft posts, newest first
   eleventyConfig.addCollection("posts", collectionApi =>
     collectionApi.getFilteredByGlob("posts/*.md")
       .filter(post => !post.data.draft)
       .reverse()
   );
 
-  // --- Collection: Group posts by tag (normalized & Title-cased) ---
+  // 4.2. Group posts by normalized, Title-cased tag
   eleventyConfig.addCollection("tagMap", collectionApi => {
     let map = {};
     collectionApi.getFilteredByGlob("posts/*.md")
@@ -69,32 +79,20 @@ module.exports = function(eleventyConfig) {
     return map;
   });
 
-  // --- Collection: Unique tag list (normalized & Title-cased) ---
-  eleventyConfig.addCollection("tagList", collectionApi => {
-    let tagSet = new Set();
-    collectionApi.getFilteredByGlob("posts/*.md")
-      .filter(post => !post.data.draft && Array.isArray(post.data.tags))
-      .forEach(post => {
-        post.data.tags.forEach(rawTag => {
-          let key = rawTag.toString().toLowerCase();
-          let display = key.charAt(0).toUpperCase() + key.slice(1);
-          tagSet.add(display);
-        });
-      });
-    return [...tagSet];
-  });
+  // 4.3. Unique tag list (just the keys of tagMap)
+  eleventyConfig.addCollection("tagList", collectionApi =>
+    Object.keys(collectionApi.getCollection("tagMap"))
+  );
 
-  // --- Auto-layout switcher based on input path ---
+  // --- 5. Auto-layout for posts vs pages ---
   eleventyConfig.addGlobalData("eleventyComputed", {
-    layout: data => {
-      if (data.page && data.page.inputPath && data.page.inputPath.includes("/posts/")) {
-        return "layouts/post.njk";
-      }
-      return data.layout || null;
-    }
+    layout: data =>
+      data.page.inputPath.includes("/posts/")
+        ? "layouts/post.njk"
+        : data.layout || "layouts/base.njk"
   });
 
-  // --- Return Directory Settings ---
+  // --- 6. Directory settings ---
   return {
     dir: {
       input: ".",            // Project root
