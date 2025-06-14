@@ -18,7 +18,9 @@
         {% endif %}
       </p>
 
-      <p class="description">{{ post.templateContent | truncate(150, true, "…") | safe }}</p>
+      <p class="description">
+        {{ post.templateContent | truncate(150, true, "…") | safe }}
+      </p>
     </div>
   {% else %}
     <p>No posts found.</p>
@@ -28,10 +30,10 @@
 <div class="sidebar">
   <div class="tags">
     <h3>Tags</h3>
-    <a href="/tags/philosophy/">Philosophy</a>
-    <a href="/tags/cosmology/">Cosmology</a>
-    <a href="/tags/shayari/">Shayari</a>
-    <a href="/tags/wisdom/">Wisdom</a>
+    {# — loop the dynamic tag list instead of hard-coding — #}
+    {% for tag in collections.tagList %}
+      <a href="/tags/{{ tag | slugify }}/">{{ tag }}</a>
+    {% endfor %}
   </div>
 
   <div class="subscribe">
