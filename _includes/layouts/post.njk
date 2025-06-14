@@ -1,40 +1,43 @@
 ---
 # _includes/layouts/post.njk
-# (No <head> here—base.njk has that)
+# This is a layout—no <html> or <head> tags here.
 ---
 
 {% extends "layouts/base.njk" %}
 
 {% block content %}
   <article class="post" style="margin:2rem auto; max-width:800px; padding:0 1rem;">
-    {# --- Draft badge --- #}
+
+    {# — Show Draft Badge — #}
     {% if page.data.draft %}
       <p style="color:red; font-weight:bold;">⚠️ Draft Post</p>
     {% endif %}
 
-    {# --- Post title as heading --- #}
+    {# — Post Title — #}
     <h1 style="margin-bottom:0.5rem;">{{ page.data.title }}</h1>
 
-    {# --- Date below the title --- #}
+    {# — Post Date — #}
     <p class="meta" style="color:#666; font-size:0.9rem; margin-top:0; margin-bottom:1.5rem;">
       {{ page.date | date }}
     </p>
 
-    {# --- Optional featured image --- #}
+    {# — Featured Image (if any) — #}
     {% if page.data.featured_image %}
       <div style="margin:1rem 0;">
-        <img src="{{ page.data.featured_image }}"
-             alt="{{ page.data.title }}"
-             style="width:100%;height:auto;border-radius:4px;" />
+        <img
+          src="{{ page.data.featured_image }}"
+          alt="{{ page.data.title }}"
+          style="width:100%;height:auto;border-radius:4px;"
+        />
       </div>
     {% endif %}
 
-    {# --- Main content --- #}
+    {# — Main Content — #}
     <div class="post-body">
       {{ content | safe }}
     </div>
 
-    {# --- Tags list --- #}
+    {# — Tags List — #}
     {% if page.data.tags %}
       <div class="post-tags" style="margin-top:2rem;">
         <strong>Tags:</strong>
@@ -49,5 +52,6 @@
         </ul>
       </div>
     {% endif %}
+
   </article>
 {% endblock %}
