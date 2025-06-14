@@ -14,7 +14,7 @@
     {% endif %}
 
     {# — Post Title — #}
-    <h1 style="margin-bottom:0.5rem;">{{ page.data.title }}</h1>
+    <h1 style="margin-bottom:0.5rem;">{{ title }}</h1>
 
     {# — Post Date — #}
     <p class="meta" style="color:#666; font-size:0.9rem; margin-top:0; margin-bottom:1.5rem;">
@@ -26,7 +26,7 @@
       <div style="margin:1rem 0;">
         <img
           src="{{ page.data.featured_image }}"
-          alt="{{ page.data.title }}"
+          alt="{{ title }}"
           style="width:100%;height:auto;border-radius:4px;"
         />
       </div>
