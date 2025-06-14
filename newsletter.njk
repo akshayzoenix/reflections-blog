@@ -13,10 +13,9 @@
 <div class="sidebar">
   <div class="tags">
     <h3>Tags</h3>
-    <a href="/tags/philosophy/">Philosophy</a>
-    <a href="/tags/cosmology/">Cosmology</a>
-    <a href="/tags/shayari/">Shayari</a>
-    <a href="/tags/wisdom/">Wisdom</a>
+    {% for tag in collections.tagList %}
+      <a href="/tags/{{ tag | slugify }}/">{{ tag }}</a>
+    {% endfor %}
   </div>
   <div class="subscribe">
     <h3>Subscribe</h3>
