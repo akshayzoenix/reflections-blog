@@ -34,7 +34,6 @@
 <div class="sidebar">
   <div class="tags">
     <h3>Tags</h3>
-    {# auto-loop through your dynamic tagList #}
     {% for tag in collections.tagList %}
       <a href="/tags/{{ tag | slugify }}/">{{ tag }}</a>
     {% endfor %}
