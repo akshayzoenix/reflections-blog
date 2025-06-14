@@ -1,6 +1,6 @@
 ---
 # _includes/layouts/post.njk
-# This is a layout—no <html> or <head> tags here.
+# This is a layout—no <html> or <head> here; base.njk provides that.
 ---
 
 {% extends "layouts/base.njk" %}
@@ -8,7 +8,7 @@
 {% block content %}
   <article class="post" style="margin:2rem auto; max-width:800px; padding:0 1rem;">
 
-    {# — Show Draft Badge — #}
+    {# — Draft badge — #}
     {% if page.data.draft %}
       <p style="color:red; font-weight:bold;">⚠️ Draft Post</p>
     {% endif %}
@@ -16,18 +16,24 @@
     {# — Post Title — #}
     <h1 style="margin-bottom:0.5rem;">{{ page.data.title }}</h1>
 
-    {# — Post Date — #}
+    {# — Post Date + Clickable Tags — #}
     <p class="meta" style="color:#666; font-size:0.9rem; margin-top:0; margin-bottom:1.5rem;">
       {{ page.date | date }}
+      {% if page.data.tags %}
+        ·
+        {% for tag in page.data.tags %}
+          <a href="/tags/{{ tag | slugify }}/">{{ tag }}</a>{% if not loop.last %}, {% endif %}
+        {% endfor %}
+      {% endif %}
     </p>
 
-    {# — Featured Image (if any) — #}
+    {# — Featured Image — #}
     {% if page.data.featured_image %}
       <div style="margin:1rem 0;">
         <img
           src="{{ page.data.featured_image }}"
           alt="{{ page.data.title }}"
-          style="width:100%;height:auto;border-radius:4px;"
+          style="width:100%; height:auto; border-radius:4px;"
         />
       </div>
     {% endif %}
@@ -36,25 +42,6 @@
     <div class="post-body">
       {{ content | safe }}
     </div>
-
-    {# — Tags List — #}
-    {% if page.data.tags %}
-      <div class="post-tags" style="margin-top:2rem;">
-        <strong>Tags:</strong>
-        <ul style="list-style:none; display:flex; flex-wrap:wrap; gap:0.5rem; padding:0; margin:0.5rem 0;">
-          {% for tag in page.data.tags %}
-            <li style="background:#eee; padding:0.3rem 0.6rem; border-radius:12px;">
-              <a 
-                href="/tags/{{ tag | slugify }}/" 
-                style="text-decoration:none; color:inherit;"
-              >
-                {{ tag }}
-              </a>
-            </li>
-          {% endfor %}
-        </ul>
-      </div>
-    {% endif %}
 
   </article>
 {% endblock %}
