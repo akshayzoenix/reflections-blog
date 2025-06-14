@@ -1,21 +1,26 @@
 ---
 # _includes/layouts/post.njk
-# (No need for HTML <head> here—base.njk will provide it)
+# (No <head> here—base.njk has that)
 ---
 
 {% extends "layouts/base.njk" %}
 
 {% block content %}
   <article class="post" style="margin:2rem auto; max-width:800px; padding:0 1rem;">
+    {# --- Draft badge --- #}
     {% if page.data.draft %}
       <p style="color:red; font-weight:bold;">⚠️ Draft Post</p>
     {% endif %}
 
-    <h2>{{ page.data.title }}</h2>
-    <p class="meta" style="color:#666; font-size:0.9rem;">
+    {# --- Post title as heading --- #}
+    <h1 style="margin-bottom:0.5rem;">{{ page.data.title }}</h1>
+
+    {# --- Date below the title --- #}
+    <p class="meta" style="color:#666; font-size:0.9rem; margin-top:0; margin-bottom:1.5rem;">
       {{ page.date | date }}
     </p>
 
+    {# --- Optional featured image --- #}
     {% if page.data.featured_image %}
       <div style="margin:1rem 0;">
         <img src="{{ page.data.featured_image }}"
@@ -24,10 +29,12 @@
       </div>
     {% endif %}
 
+    {# --- Main content --- #}
     <div class="post-body">
       {{ content | safe }}
     </div>
 
+    {# --- Tags list --- #}
     {% if page.data.tags %}
       <div class="post-tags" style="margin-top:2rem;">
         <strong>Tags:</strong>
