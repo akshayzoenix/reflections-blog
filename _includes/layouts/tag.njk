@@ -1,25 +1,32 @@
 {# _includes/layouts/tag.njk #}
----
-# (no html/head here—base.njk provides them)
----
-
 {% extends "layouts/base.njk" %}
 
 {% block content %}
-  <main style="display:flex; flex-wrap:wrap; max-width:1100px; margin:3rem auto; padding:0 1rem; gap:2rem;">
-
-    {# ——— Left: list of posts in this tag ——— #}
-    <section style="flex:3 1 0;">
+  <main
+    style="
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 1100px;
+      margin: 3rem auto;
+      gap: 2rem;
+      padding: 0 1rem;
+    "
+  >
+    {# ——— Left: Posts list for this tag ——— #}
+    <section style="flex: 3 1 0%; max-width: 800px;">
       <h1>Posts tagged “{{ tag }}”</h1>
 
-      {% if posts and posts.length %}
+      {% if posts.length %}
         <ul style="list-style:none; padding:0;">
           {% for post in posts %}
             <li style="margin-bottom:1.5rem;">
-              <a href="{{ post.url }}"
-                 style="font-size:1.2rem; font-weight:bold;">
+              <a
+                href="{{ post.url }}"
+                style="font-size:1.2rem; font-weight:bold;"
+              >
                 {{ post.data.title }}
-              </a><br>
+              </a><br />
+              {# ← **Here we use your existing date filter** without args #}
               <small>{{ post.date | date }}</small>
             </li>
           {% endfor %}
@@ -28,11 +35,13 @@
         <p>No posts found for this tag.</p>
       {% endif %}
 
-      <p><a href="/tags.html">← Back to all tags</a></p>
+      <p style="margin-top:2rem;">
+        <a href="/tags.html">← Back to all tags</a>
+      </p>
     </section>
 
-    {# ——— Right: your existing sidebar (tags + subscribe) ——— #}
-    <aside class="sidebar" style="flex:1 1 0;">
+    {# ——— Right: your standard sidebar ——— #}
+    <aside class="sidebar" style="flex: 1 1 0%;">
       <div class="tags">
         <h3>Tags</h3>
         {% for t in collections.tagList %}
@@ -44,11 +53,15 @@
         <h3>Subscribe</h3>
         <p>Get the latest posts delivered straight to your inbox</p>
         <form name="sidebar-newsletter" method="POST" data-netlify="true">
-          <input type="email" name="email" placeholder="Email address" required />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email address"
+            required
+          />
           <button type="submit">Subscribe</button>
         </form>
       </div>
     </aside>
-
   </main>
 {% endblock %}
