@@ -32,15 +32,15 @@ header, footer {
 
 /* — site-logo height ↑50% — */
 .site-logo {
-  /* was 2.5rem; now 2.5rem × 1.5 = 3.75rem */
-  height: 3.75rem;
+  /* was 2.5rem; now 2.5rem × 1.5 = 3.75rem This section and the below h1 header controls the size of heading Reflections*/
+  height: 5.625rem;
   width: auto;
 }
 
 /* — main title font-size ↑50% — */
 header h1 {
   /* was 2.5rem; now 2.5rem × 1.5 = 3.75rem */
-  font-size: 3.75rem;
+  font-size: 5.625rem;
   margin: 0;
 }
 
