@@ -21,13 +21,24 @@
     </nav>
   </header>
 
-  <main style="max-width: 800px; margin: 3rem auto; padding: 0 1rem;">
-    <section>
+  <!-- -- convert to flex two-column, left for posts, right for sidebar -- -->
+  <main style="
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1100px;
+    margin: 3rem auto;
+    gap: 2rem;
+    padding: 0 1rem;
+  ">
+    <!-- left column: your existing tagged-posts list -->
+    <section style="flex: 3 1 0%; max-width: 800px;">
       {% if posts.length > 0 %}
         <ul class="post-list">
           {% for post in posts %}
             <li style="margin-bottom: 1rem;">
-              <a href="{{ post.url }}" style="font-size: 1.2rem;">{{ post.data.title }}</a><br />
+              <a href="{{ post.url }}" style="font-size: 1.2rem;">
+                {{ post.data.title }}
+              </a><br />
               <small>{{ post.date | date('MMMM D, YYYY') }}</small>
             </li>
           {% endfor %}
@@ -35,11 +46,30 @@
       {% else %}
         <p>No posts found for this tag.</p>
       {% endif %}
+
+      <div style="margin-top: 2rem;">
+        <a href="/tags.html">← Back to all tags</a>
+      </div>
     </section>
 
-    <div style="margin-top: 2rem;">
-      <a href="/tags.html">← Back to all tags</a>
-    </div>
+    <!-- right column: exact same sidebar markup you use elsewhere -->
+    <aside class="sidebar" style="flex: 1 1 0%;">
+      <div class="tags">
+        <h3>Tags</h3>
+        {% for t in collections.tagList %}
+          <a href="/tags/{{ t | slugify }}/">{{ t }}</a>
+        {% endfor %}
+      </div>
+
+      <div class="subscribe">
+        <h3>Subscribe</h3>
+        <p>Get the latest posts delivered straight to your inbox</p>
+        <form name="newsletter" method="POST" data-netlify="true">
+          <input type="email" name="email" placeholder="Email address" required />
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </aside>
   </main>
 
   <footer>
