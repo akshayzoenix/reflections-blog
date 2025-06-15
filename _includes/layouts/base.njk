@@ -12,8 +12,8 @@
 
   <header>
     <div class="logo-and-title">
-      {# Only show logo on the homepage #}
-      {% if page.url === "/" or page.url === "/index.html" %}
+      {# Only show logo on the homepage (either "/" or "/index.html") #}
+      {% if page.url == '/' or page.url == '/index.html' %}
         <img src="/images/uploads/logo.png" alt="Reflections logo" class="site-logo" />
       {% endif %}
       <h1>Reflections</h1>
