@@ -32,15 +32,15 @@ header, footer {
 
 /* — site-logo height ↑50% — */
 .site-logo {
-  /* was 2.5rem; now 2.5rem × 1.5 = 3.75rem This section and the below h1 header controls the size of heading Reflections*/
-  height: 5.625rem;
+  /* was 2.5rem; now 2.5rem × 1.5 = 3.75rem */
+  height: 3.75rem;
   width: auto;
 }
 
 /* — main title font-size ↑50% — */
 header h1 {
   /* was 2.5rem; now 2.5rem × 1.5 = 3.75rem */
-  font-size: 5.625rem;
+  font-size: 3.75rem;
   margin: 0;
 }
 
@@ -48,19 +48,16 @@ nav {
   display: flex;
   justify-content: center;
   /* — space between links ↑50% — */
-  /* was gap:2rem; now 2rem × 1.5 = 3rem */
-  gap: 3rem;
+  gap: 3rem;          /* was 2rem; now 2rem × 1.5 */
   /* — distance from title ↑50% — */
-  /* was margin-top:1rem; now 1rem × 1.5 = 1.5rem */
-  margin-top: 1.5rem;
+  margin-top: 1.5rem; /* was 1rem; now 1rem × 1.5 */
   flex-wrap: wrap;
 }
 
 /* — nav link text ↑50% — */
 nav a {
   text-decoration: none;
-  /* base link size defaults to 1rem; bump it */
-  font-size: 1.5rem; /* 1rem × 1.5 */
+  font-size: 1.5rem; /* was 1rem; now 1rem × 1.5 */
 }
 
 main {
@@ -187,5 +184,43 @@ body.dark-mode .subscribe button {
   }
   header nav {
     margin-top: 1rem;
+  }
+}
+
+/* ─── Mobile adjustments ─── */
+@media (max-width: 480px) {
+  /* tighten header padding so the big logo/title stay visible */
+  header {
+    padding: 1rem;
+  }
+
+  /* keep logo+title at current large size, but reduce their gap */
+  .logo-and-title {
+    gap: 0.5rem;
+  }
+
+  /* allow nav links to wrap into two rows */
+  header nav {
+    flex-wrap: wrap;
+    gap: 1rem;        /* a bit less space between items */
+    margin-top: 1rem; /* pull it up slightly under the title */
+  }
+
+  /* slightly smaller nav text so links never break mid-word */
+  header nav a {
+    font-size: 1.2rem; /* down from 1.5rem */
+  }
+
+  /* stack posts and sidebar vertically */
+  main {
+    flex-direction: column;
+  }
+  .posts, .sidebar {
+    width: 100%;
+  }
+
+  /* tighten up spacing between posts on mobile */
+  .post {
+    margin-bottom: 1.5rem;
   }
 }
