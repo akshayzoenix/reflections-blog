@@ -20,29 +20,23 @@ header, footer {
   border-bottom: 1px solid #ddd;
 }
 
-/* —— NEW: make header a flex container so logo + title align —— */
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* —— NEW: wrap logo + title — style them —— */
+/* —— logo + title styling —— */
 .logo-and-title {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
 }
 .site-logo {
-  max-height: 2.5rem;
-  margin-right: 0.75rem;
+  height: 2.5rem;
+  width: auto;
 }
-
-/* —— end of new logo rules —— */
 
 header h1 {
   font-size: 2.5rem;
   margin: 0;
 }
+
 nav {
   display: flex;
   justify-content: center;
@@ -50,11 +44,10 @@ nav {
   margin-top: 1rem;
   flex-wrap: wrap;
 }
-/* Removed color: #333 from nav a to rely on inherited color */
 nav a {
   text-decoration: none;
-  /* color: #333;  <-- removed */
 }
+
 main {
   display: flex;
   flex-wrap: wrap;
@@ -77,6 +70,7 @@ main {
     flex: 1 1 0%;
   }
 }
+
 .post {
   margin-bottom: 2.5rem;
 }
@@ -92,6 +86,7 @@ main {
 .post p.description {
   font-size: 1.1rem;
 }
+
 .sidebar h3 {
   margin-top: 0;
 }
@@ -103,9 +98,8 @@ main {
   border-radius: 4px;
   text-decoration: none;
   font-size: 0.9rem;
-  /* Removed color: #333 to inherit */
-  /* color: #333; <-- removed */
 }
+
 .subscribe input[type="email"] {
   width: 100%;
   padding: 0.5rem;
@@ -126,6 +120,7 @@ main {
   background: #444;
   transform: scale(1.05);
 }
+
 img.hero {
   width: 100%;
   height: auto;
@@ -138,10 +133,9 @@ body.dark-mode {
   background: #111;
   color: #fdfaf5;
 }
-/* Make all links inherit color in dark mode */
 body.dark-mode a {
   color: inherit;
-  text-decoration: underline; /* optional */
+  text-decoration: underline;
 }
 body.dark-mode header, body.dark-mode footer {
   border-bottom: 1px solid #555;
@@ -168,4 +162,16 @@ body.dark-mode .subscribe button {
 }
 .dark-toggle:hover {
   background: #444;
+}
+
+/* Restore header centering on wider screens */
+@media (min-width: 600px) {
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  header nav {
+    margin-top: 1rem;
+  }
 }
