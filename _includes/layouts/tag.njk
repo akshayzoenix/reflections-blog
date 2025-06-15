@@ -1,93 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Posts tagged "{{ tag }}" | Reflections</title>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css" />
-</head>
-<body>
-  <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+---
+layout: layouts/base.njk
+---
 
-  <header>
-    <h1>Posts tagged <em>"{{ tag }}"</em></h1>
-    <nav>
-      <a href="/index.html">Home</a>
-      <a href="/about.html">About</a>
-      <a href="/posts.html">Posts</a>
-      <a href="/tags.html">Tags</a>
-      <a href="/newsletter.html">Newsletter</a>
-    </nav>
-  </header>
-
-  <!-- -- convert to flex two-column, left for posts, right for sidebar -- -->
-  <main style="
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 1100px;
-    margin: 3rem auto;
-    gap: 2rem;
-    padding: 0 1rem;
-  ">
-    <!-- left column: your existing tagged-posts list -->
-    <section style="flex: 3 1 0%; max-width: 800px;">
-      {% if posts.length > 0 %}
-        <ul class="post-list">
-          {% for post in posts %}
-            <li style="margin-bottom: 1rem;">
-              <a href="{{ post.url }}" style="font-size: 1.2rem;">
-                {{ post.data.title }}
-              </a><br />
-              <small>{{ post.date | date('MMMM D, YYYY') }}</small>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p>No posts found for this tag.</p>
-      {% endif %}
-
-      <div style="margin-top: 2rem;">
-        <a href="/tags.html">← Back to all tags</a>
-      </div>
-    </section>
-
-    <!-- right column: exact same sidebar markup you use elsewhere -->
-    <aside class="sidebar" style="flex: 1 1 0%;">
-      <div class="tags">
-        <h3>Tags</h3>
-        {% for t in collections.tagList %}
-          <a href="/tags/{{ t | slugify }}/">{{ t }}</a>
+{% block content %}
+<main style="
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1100px;
+  margin: 3rem auto;
+  gap: 2rem;
+  padding: 0 1rem;
+">
+  <!-- Left column: posts for this tag -->
+  <section style="flex: 3 1 0%; max-width: 800px;">
+    <h2>Posts tagged “{{ tag }}”</h2>
+    {% if posts.length > 0 %}
+      <ul class="post-list">
+        {% for post in posts %}
+          <li style="margin-bottom: 1rem;">
+            <a href="{{ post.url }}" style="font-size: 1.2rem;">{{ post.data.title }}</a><br />
+            <small>{{ post.date | date('MMMM D, YYYY') }}</small>
+          </li>
         {% endfor %}
-      </div>
+      </ul>
+    {% else %}
+      <p>No posts found for this tag.</p>
+    {% endif %}
 
-      <div class="subscribe">
-        <h3>Subscribe</h3>
-        <p>Get the latest posts delivered straight to your inbox</p>
-        <form name="newsletter" method="POST" data-netlify="true">
-          <input type="email" name="email" placeholder="Email address" required />
-          <button type="submit">Subscribe</button>
-        </form>
-      </div>
-    </aside>
-  </main>
+    <p style="margin-top: 2rem;">
+      <a href="/tags.html">← Back to all tags</a>
+    </p>
+  </section>
 
-  <footer>
-    <p>&copy; 2025 Soch Se Shabd Tak</p>
-  </footer>
+  <!-- Right column: same sidebar you use elsewhere -->
+  <aside class="sidebar" style="flex: 1 1 0%;">
+    <div class="tags">
+      <h3>Tags</h3>
+      {% for t in collections.tagList %}
+        <a href="/tags/{{ t | slugify }}/">{{ t }}</a>
+      {% endfor %}
+    </div>
 
-  <script>
-    if (localStorage.getItem("dark-mode") === "enabled") {
-      document.body.classList.add("dark-mode");
-    }
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark-mode");
-      if (document.body.classList.contains("dark-mode")) {
-        localStorage.setItem("dark-mode", "enabled");
-      } else {
-        localStorage.setItem("dark-mode", "disabled");
-      }
-    }
-  </script>
-</body>
-</html>
+    <div class="subscribe">
+      <h3>Subscribe</h3>
+      <p>Get the latest posts delivered straight to your inbox</p>
+      <form name="newsletter" method="POST" data-netlify="true">
+        <input type="email" name="email" placeholder="Email address" required />
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </aside>
+</main>
+{% endblock %}
