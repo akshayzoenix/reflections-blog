@@ -2,65 +2,45 @@
 {% extends "layouts/base.njk" %}
 
 {% block content %}
-  <main
-    style="
-      display: flex;
-      flex-wrap: wrap;
-      max-width: 1100px;
-      margin: 3rem auto;
-      gap: 2rem;
-      padding: 0 1rem;
-    "
-  >
-    {# ← Left column: the list of posts for this tag #}
-    <section style="flex: 3 1 0%; max-width: 800px;">
-      <h1>Posts tagged “{{ tag }}”</h1>
+  <div class="posts">
+    <h2>Posts tagged “{{ tag }}”</h2>
 
-      {% if posts.length %}
-        <ul style="list-style:none; padding:0;">
-          {% for post in posts %}
-            <li style="margin-bottom:1.5rem;">
-              <a
-                href="{{ post.url }}"
-                style="font-size:1.2rem; font-weight:bold;"
-              >
-                {{ post.data.title }}
-              </a><br />
-              <small>{{ post.date | date }}</small>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p>No posts found for this tag.</p>
-      {% endif %}
+    {% if pagination.items.length %}
+      {% for post in pagination.items %}
+        <div class="post">
+          <h3>
+            <a href="{{ post.url }}">{{ post.data.title }}</a>
+          </h3>
+          <p class="meta">
+            {{ post.date | date }}
+          </p>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No posts found for this tag.</p>
+    {% endif %}
+  </div>
 
-      <p style="margin-top:2rem;">
-        <a href="/tags.html">← Back to all tags</a>
-      </p>
-    </section>
+  <div class="sidebar">
+    <div class="tags">
+      <h3>Tags</h3>
+      {% for t in collections.tagList %}
+        <a href="/tags/{{ t | slugify }}/">{{ t }}</a>
+      {% endfor %}
+    </div>
 
-    {# ← Right column: your existing sidebar with tags & subscribe #}
-    <aside class="sidebar" style="flex: 1 1 0%;">
-      <div class="tags">
-        <h3>Tags</h3>
-        {% for t in collections.tagList %}
-          <a href="/tags/{{ t | slugify }}/">{{ t }}</a>
-        {% endfor %}
-      </div>
-
-      <div class="subscribe">
-        <h3>Subscribe</h3>
-        <p>Get the latest posts delivered straight to your inbox</p>
-        <form name="sidebar-newsletter" method="POST" data-netlify="true">
-          <input
-            type="email"
-            name="email"
-            placeholder="Email address"
-            required
-          />
-          <button type="submit">Subscribe</button>
-        </form>
-      </div>
-    </aside>
-  </main>
+    <div class="subscribe">
+      <h3>Subscribe</h3>
+      <p>Get the latest posts delivered straight to your inbox</p>
+      <form name="newsletter" method="POST" data-netlify="true">
+        <input
+          type="email"
+          name="email"
+          placeholder="Email address"
+          required
+        />
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
 {% endblock %}
