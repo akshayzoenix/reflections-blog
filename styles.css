@@ -167,9 +167,8 @@ body.dark-mode .subscribe button {
 /* Restore header centering on wider screens */
 @media (min-width: 600px) {
   header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: block;
+    text-align: center;
   }
   header nav {
     margin-top: 1rem;
