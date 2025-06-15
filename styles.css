@@ -14,9 +14,10 @@ a {
   text-decoration: underline; /* optional, keeps links visible */
 }
 
-/* ↑ was 2rem; now 2rem × 1.25 = 2.5rem */
+/* ————————— header & footer padding ↑50% ————————— */
 header, footer {
-  padding: 2.5rem;
+  /* was 2rem; now 2rem × 1.5 = 3rem */
+  padding: 3rem;
   text-align: center;
   border-bottom: 1px solid #ddd;
 }
@@ -28,27 +29,38 @@ header, footer {
   justify-content: center;
   gap: 0.75rem;
 }
-/* ↑ was 2.5rem; now 2.5rem × 1.25 = 3.125rem */
+
+/* — site-logo height ↑50% — */
 .site-logo {
-  height: 3.125rem;
+  /* was 2.5rem; now 2.5rem × 1.5 = 3.75rem */
+  height: 3.75rem;
   width: auto;
 }
 
-/* ↑ was 2.5rem; now 2.5rem × 1.25 = 3.125rem */
+/* — main title font-size ↑50% — */
 header h1 {
-  font-size: 3.125rem;
+  /* was 2.5rem; now 2.5rem × 1.5 = 3.75rem */
+  font-size: 3.75rem;
   margin: 0;
 }
 
 nav {
   display: flex;
   justify-content: center;
-  gap: 2rem;
-  margin-top: 1rem;
+  /* — space between links ↑50% — */
+  /* was gap:2rem; now 2rem × 1.5 = 3rem */
+  gap: 3rem;
+  /* — distance from title ↑50% — */
+  /* was margin-top:1rem; now 1rem × 1.5 = 1.5rem */
+  margin-top: 1.5rem;
   flex-wrap: wrap;
 }
+
+/* — nav link text ↑50% — */
 nav a {
   text-decoration: none;
+  /* base link size defaults to 1rem; bump it */
+  font-size: 1.5rem; /* 1rem × 1.5 */
 }
 
 main {
