@@ -12,7 +12,7 @@
       padding: 0 1rem;
     "
   >
-    {# ——— Left: Posts list for this tag ——— #}
+    {# ← Left column: the list of posts for this tag #}
     <section style="flex: 3 1 0%; max-width: 800px;">
       <h1>Posts tagged “{{ tag }}”</h1>
 
@@ -26,7 +26,6 @@
               >
                 {{ post.data.title }}
               </a><br />
-              {# ← **Here we use your existing date filter** without args #}
               <small>{{ post.date | date }}</small>
             </li>
           {% endfor %}
@@ -40,7 +39,7 @@
       </p>
     </section>
 
-    {# ——— Right: your standard sidebar ——— #}
+    {# ← Right column: your existing sidebar with tags & subscribe #}
     <aside class="sidebar" style="flex: 1 1 0%;">
       <div class="tags">
         <h3>Tags</h3>
