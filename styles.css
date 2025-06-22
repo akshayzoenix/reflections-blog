@@ -186,7 +186,8 @@ body.dark-mode .subscribe button {
     justify-content: center;
     height: 2rem;
     padding: 0.3rem 0.6rem;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    white-space: nowrap;
   }
 }
 
@@ -212,23 +213,26 @@ body.dark-mode .subscribe button {
   }
 
   header nav {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    justify-content: center;
     gap: 1rem;
     margin-top: 1rem;
-    align-items: center;
-    justify-content: center;
+    overflow-x: auto;
   }
 
   header nav a {
-    font-size: 1.2rem;
-    padding: 0.3rem 0.6rem;
+    font-size: 1.1rem;
+    padding: 0.3rem 0.5rem;
     line-height: 1;
+    white-space: nowrap;
   }
 
   main {
     flex-direction: column;
   }
-  .posts, .sidebar {
+
+  .posts,
+  .sidebar {
     width: 100%;
   }
 
