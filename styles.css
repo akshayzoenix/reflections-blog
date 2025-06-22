@@ -146,7 +146,7 @@ body.dark-mode .subscribe button {
   color: #111;
 }
 
-/* Dark toggle inside nav (mobile only) */
+/* Dark toggle shared base styles */
 .dark-toggle {
   background: #222;
   color: #fff;
@@ -161,9 +161,27 @@ body.dark-mode .subscribe button {
 .dark-toggle:hover {
   background: #444;
 }
-@media (min-width: 481px) {
-  .mobile-only {
+
+/* Desktop-only button (top-right fixed) */
+.desktop-only {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 999;
+}
+@media (max-width: 480px) {
+  .desktop-only {
     display: none;
+  }
+}
+
+/* Mobile-only button (inline in nav) */
+.mobile-only {
+  display: none;
+}
+@media (max-width: 480px) {
+  .mobile-only {
+    display: inline-block;
   }
 }
 
