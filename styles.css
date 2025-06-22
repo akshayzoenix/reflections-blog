@@ -80,10 +80,17 @@ main {
 .post {
   margin-bottom: 2.5rem;
 }
+
 .post h2 {
   font-size: 1.8rem;
   margin-bottom: 0.5rem;
 }
+
+/* ✅ Remove underline on post titles */
+.post h2 a {
+  text-decoration: none;
+}
+
 .post p.meta {
   color: #555;
   font-size: 0.9rem;
@@ -134,7 +141,7 @@ img.hero {
   border-radius: 6px;
 }
 
-/* Dark Mode */
+/* ───── DARK MODE ───── */
 body.dark-mode {
   background: #111;
   color: #fdfaf5;
@@ -145,12 +152,18 @@ body.dark-mode a {
   text-decoration: underline;
 }
 
-/* ✅ Remove underline from nav links in dark mode */
+/* ✅ Remove underline on nav links only in dark mode */
 body.dark-mode nav a {
   text-decoration: none;
 }
 
-body.dark-mode header, body.dark-mode footer {
+/* ✅ Remove underline on post titles in dark mode too */
+body.dark-mode .post h2 a {
+  text-decoration: none;
+}
+
+body.dark-mode header,
+body.dark-mode footer {
   border-bottom: 1px solid #555;
 }
 
@@ -159,7 +172,7 @@ body.dark-mode .subscribe button {
   color: #111;
 }
 
-/* Dark toggle shared styles */
+/* ───── TOGGLE BUTTON ───── */
 .dark-toggle {
   background: #222;
   color: #fff;
@@ -174,21 +187,18 @@ body.dark-mode .subscribe button {
   background: #444;
 }
 
-/* Desktop toggle (top right fixed) */
 .desktop-only {
   position: fixed;
   top: 1rem;
   right: 1rem;
   z-index: 999;
 }
-
 @media (max-width: 480px) {
   .desktop-only {
     display: none;
   }
 }
 
-/* Mobile toggle (inline inside nav) */
 .mobile-only {
   display: none;
 }
@@ -203,7 +213,7 @@ body.dark-mode .subscribe button {
   }
 }
 
-/* Restore header centering on wider screens */
+/* ───── Responsive Fixes ───── */
 @media (min-width: 600px) {
   header {
     display: block;
@@ -214,7 +224,6 @@ body.dark-mode .subscribe button {
   }
 }
 
-/* ─── Mobile adjustments ─── */
 @media (max-width: 480px) {
   header {
     padding: 1rem;
