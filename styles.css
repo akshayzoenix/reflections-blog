@@ -1,11 +1,14 @@
 /* Base body styles */
+* {
+  transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
 body {
   font-family: 'EB Garamond', serif;
   margin: 0;
   padding: 0;
   background: #fdfaf5;
   color: #111;
-  transition: background 0.3s, color 0.3s;
 }
 
 a {
@@ -156,7 +159,6 @@ body.dark-mode .subscribe button {
   border-radius: 4px;
   font-family: inherit;
   font-size: 1.2rem;
-  transition: background 0.3s;
 }
 .dark-toggle:hover {
   background: #444;
