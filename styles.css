@@ -184,10 +184,9 @@ body.dark-mode .subscribe button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 2rem;
-    padding: 0.3rem 0.6rem;
-    font-size: 1.1rem;
-    white-space: nowrap;
+    height: 1.8rem;
+    padding: 0.2rem 0.4rem;
+    font-size: 1rem;
   }
 }
 
@@ -215,14 +214,14 @@ body.dark-mode .subscribe button {
   header nav {
     flex-wrap: nowrap;
     justify-content: center;
-    gap: 1rem;
+    align-items: center;
+    gap: 0.8rem;
     margin-top: 1rem;
-    overflow-x: auto;
   }
 
   header nav a {
-    font-size: 1.1rem;
-    padding: 0.3rem 0.5rem;
+    font-size: 1rem;
+    padding: 0.2rem 0.4rem;
     line-height: 1;
     white-space: nowrap;
   }
@@ -230,9 +229,7 @@ body.dark-mode .subscribe button {
   main {
     flex-direction: column;
   }
-
-  .posts,
-  .sidebar {
+  .posts, .sidebar {
     width: 100%;
   }
 
