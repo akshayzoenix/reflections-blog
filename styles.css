@@ -8,21 +8,17 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
-/* Make all links inherit color by default (normal mode) */
 a {
   color: inherit;
-  text-decoration: underline; /* optional, keeps links visible */
+  text-decoration: underline;
 }
 
-/* ————————— header & footer padding ↑50% ————————— */
 header, footer {
-  /* was 2rem; now 2rem × 1.5 = 3rem */
   padding: 3rem;
   text-align: center;
   border-bottom: 1px solid #ddd;
 }
 
-/* —— logo + title styling —— */
 .logo-and-title {
   display: inline-flex;
   align-items: center;
@@ -30,16 +26,12 @@ header, footer {
   gap: 0.75rem;
 }
 
-/* — site-logo height ↑50% — */
 .site-logo {
-  /* was 2.5rem; now 2.5rem × 1.5 = 3.75rem */
   height: 3.75rem;
   width: auto;
 }
 
-/* — main title font-size ↑50% — */
 header h1 {
-  /* was 2.5rem; now 2.5rem × 1.5 = 3.75rem */
   font-size: 3.75rem;
   margin: 0;
 }
@@ -47,17 +39,14 @@ header h1 {
 nav {
   display: flex;
   justify-content: center;
-  /* — space between links ↑50% — */
-  gap: 3rem;          /* was 2rem; now 2rem × 1.5 */
-  /* — distance from title ↑50% — */
-  margin-top: 1.5rem; /* was 1rem; now 1rem × 1.5 */
+  gap: 3rem;
+  margin-top: 1.5rem;
   flex-wrap: wrap;
 }
 
-/* — nav link text ↑50% — */
 nav a {
   text-decoration: none;
-  font-size: 1.5rem; /* was 1rem; now 1rem × 1.5 */
+  font-size: 1.5rem;
 }
 
 main {
@@ -157,23 +146,25 @@ body.dark-mode .subscribe button {
   color: #111;
 }
 
-/* Dark mode toggle button */
+/* Dark toggle inside nav (mobile only) */
 .dark-toggle {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
   background: #222;
   color: #fff;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.8rem;
   cursor: pointer;
   border-radius: 4px;
   font-family: inherit;
+  font-size: 1.2rem;
   transition: background 0.3s;
-  z-index: 999;
 }
 .dark-toggle:hover {
   background: #444;
+}
+@media (min-width: 481px) {
+  .mobile-only {
+    display: none;
+  }
 }
 
 /* Restore header centering on wider screens */
@@ -189,29 +180,24 @@ body.dark-mode .subscribe button {
 
 /* ─── Mobile adjustments ─── */
 @media (max-width: 480px) {
-  /* tighten header padding so the big logo/title stay visible */
   header {
     padding: 1rem;
   }
 
-  /* keep logo+title at current large size, but reduce their gap */
   .logo-and-title {
     gap: 0.5rem;
   }
 
-  /* allow nav links to wrap into two rows */
   header nav {
     flex-wrap: wrap;
-    gap: 1rem;        /* a bit less space between items */
-    margin-top: 1rem; /* pull it up slightly under the title */
+    gap: 1rem;
+    margin-top: 1rem;
   }
 
-  /* slightly smaller nav text so links never break mid-word */
   header nav a {
-    font-size: 1.2rem; /* down from 1.5rem */
+    font-size: 1.2rem;
   }
 
-  /* stack posts and sidebar vertically */
   main {
     flex-direction: column;
   }
@@ -219,7 +205,6 @@ body.dark-mode .subscribe button {
     width: 100%;
   }
 
-  /* tighten up spacing between posts on mobile */
   .post {
     margin-bottom: 1.5rem;
   }
