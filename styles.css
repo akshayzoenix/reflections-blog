@@ -60,12 +60,14 @@ main {
   gap: 2rem;
   padding: 0 1rem;
 }
+
 .posts {
   flex: 3 1 100%;
 }
 .sidebar {
   flex: 1 1 100%;
 }
+
 @media (min-width: 768px) {
   .posts {
     flex: 3 1 0%;
@@ -137,13 +139,21 @@ body.dark-mode {
   background: #111;
   color: #fdfaf5;
 }
+
 body.dark-mode a {
   color: inherit;
   text-decoration: underline;
 }
+
+/* ✅ Remove underline from nav links in dark mode */
+body.dark-mode nav a {
+  text-decoration: none;
+}
+
 body.dark-mode header, body.dark-mode footer {
   border-bottom: 1px solid #555;
 }
+
 body.dark-mode .subscribe button {
   background: #fdfaf5;
   color: #111;
@@ -171,6 +181,7 @@ body.dark-mode .subscribe button {
   right: 1rem;
   z-index: 999;
 }
+
 @media (max-width: 480px) {
   .desktop-only {
     display: none;
