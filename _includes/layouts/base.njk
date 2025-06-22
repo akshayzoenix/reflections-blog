@@ -9,6 +9,9 @@
 </head>
 <body>
 
+  <!-- Desktop toggle (fixed top-right) -->
+  <button class="dark-toggle desktop-only" onclick="toggleDarkMode()">🌙</button>
+
   <header>
     <div class="logo-and-title">
       <img
@@ -23,6 +26,7 @@
       <a href="/about.html" class="{% if page.url == '/about.html' %}active{% endif %}">About</a>
       <a href="/posts.html" class="{% if page.url == '/posts.html' %}active{% endif %}">Posts</a>
       <a href="/newsletter.html" class="{% if page.url == '/newsletter.html' %}active{% endif %}">Newsletter</a>
+      <!-- Mobile toggle (inline beside Newsletter) -->
       <button class="dark-toggle mobile-only" onclick="toggleDarkMode()">🌙</button>
     </nav>
   </header>
@@ -46,7 +50,3 @@
       } else {
         localStorage.setItem("dark-mode", "disabled");
       }
-    }
-  </script>
-</body>
-</html>
