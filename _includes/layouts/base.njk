@@ -10,7 +10,7 @@
 <body>
 
   <!-- Desktop toggle (fixed top-right) -->
-  <button class="dark-toggle desktop-only" onclick="toggleDarkMode()">🌙</button>
+  <button class="dark-toggle desktop-only">🌙</button>
 
   <header>
     <div class="logo-and-title">
@@ -27,7 +27,7 @@
       <a href="/posts.html" class="{% if page.url == '/posts.html' %}active{% endif %}">Posts</a>
       <a href="/newsletter.html" class="{% if page.url == '/newsletter.html' %}active{% endif %}">Newsletter</a>
       <!-- Mobile toggle (inline beside Newsletter) -->
-      <button class="dark-toggle mobile-only" onclick="toggleDarkMode()">🌙</button>
+      <button class="dark-toggle mobile-only">🌙</button>
     </nav>
   </header>
 
@@ -40,13 +40,27 @@
   </footer>
 
   <script>
-    if (localStorage.getItem("dark-mode") === "enabled") {
-      document.body.classList.add("dark-mode");
-    }
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark-mode");
-      if (document.body.classList.contains("dark-mode")) {
-        localStorage.setItem("dark-mode", "enabled");
+    function applyDarkMode(state) {
+      if (state === "enabled") {
+        document.body.classList.add("dark-mode");
       } else {
-        localStorage.setItem("dark-mode", "disabled");
+        document.body.classList.remove("dark-mode");
       }
+    }
+
+    const savedMode = localStorage.getItem("dark-mode") || "disabled";
+    applyDarkMode(savedMode);
+
+    function toggleDarkMode() {
+      const currentMode = document.body.classList.contains("dark-mode") ? "enabled" : "disabled";
+      const newMode = currentMode === "enabled" ? "disabled" : "enabled";
+      applyDarkMode(newMode);
+      localStorage.setItem("dark-mode", newMode);
+    }
+
+    document.querySelectorAll('.dark-toggle').forEach(btn => {
+      btn.addEventListener('click', toggleDarkMode);
+    });
+  </script>
+</body>
+</html>
