@@ -8,59 +8,58 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
-/* Link defaults */
+/* Make all links inherit color by default (normal mode) */
 a {
   color: inherit;
-  text-decoration: underline;
+  text-decoration: underline; /* optional, keeps links visible */
 }
 
-/* Header & footer */
+/* ————————— header & footer padding ↑50% ————————— */
 header, footer {
-  padding: 2rem;
+  /* was 2rem; now 2rem × 1.5 = 3rem */
+  padding: 3rem;
   text-align: center;
   border-bottom: 1px solid #ddd;
 }
 
-/* —— logo + title —— */
+/* —— logo + title styling —— */
 .logo-and-title {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
 }
+
+/* — site-logo height ↑50% — */
 .site-logo {
-  height: 2.5rem;
+  /* was 2.5rem; now 2.5rem × 1.5 = 3.75rem */
+  height: 3.75rem;
   width: auto;
 }
+
+/* — main title font-size ↑50% — */
 header h1 {
-  font-size: 2.5rem;
+  /* was 2.5rem; now 2.5rem × 1.5 = 3.75rem */
+  font-size: 3.75rem;
   margin: 0;
 }
 
-/* Nav bar */
 nav {
   display: flex;
   justify-content: center;
-  gap: 2rem;
-  margin-top: 1rem;
+  /* — space between links ↑50% — */
+  gap: 3rem;          /* was 2rem; now 2rem × 1.5 */
+  /* — distance from title ↑50% — */
+  margin-top: 1.5rem; /* was 1rem; now 1rem × 1.5 */
   flex-wrap: wrap;
 }
+
+/* — nav link text ↑50% — */
 nav a {
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.5rem; /* was 1rem; now 1rem × 1.5 */
 }
 
-/* — dark-mode toggle sits inline at end of nav — */
-.dark-toggle {
-  background: none;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  color: inherit;
-  margin-left: 1rem;
-}
-
-/* Main + sidebar layout */
 main {
   display: flex;
   flex-wrap: wrap;
@@ -69,20 +68,40 @@ main {
   gap: 2rem;
   padding: 0 1rem;
 }
-.posts { flex: 3 1 100%; }
-.sidebar { flex: 1 1 100%; }
+.posts {
+  flex: 3 1 100%;
+}
+.sidebar {
+  flex: 1 1 100%;
+}
 @media (min-width: 768px) {
-  .posts { flex: 3 1 0%; }
-  .sidebar { flex: 1 1 0%; }
+  .posts {
+    flex: 3 1 0%;
+  }
+  .sidebar {
+    flex: 1 1 0%;
+  }
 }
 
-/* Post styling */
-.post { margin-bottom: 2.5rem; }
-.post h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
-.post p.meta { color: #555; font-size: 0.9rem; margin-bottom: 0.5rem; }
-.post p.description { font-size: 1.1rem; }
+.post {
+  margin-bottom: 2.5rem;
+}
+.post h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+.post p.meta {
+  color: #555;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.post p.description {
+  font-size: 1.1rem;
+}
 
-.sidebar h3 { margin-top: 0; }
+.sidebar h3 {
+  margin-top: 0;
+}
 .tags a {
   display: inline-block;
   margin: 0.2rem;
@@ -93,17 +112,14 @@ main {
   font-size: 0.9rem;
 }
 
-/* Subscribe form */
-.subscribe input[type="email"],
-.subscribe button {
-  width: 100%;
-  font-family: inherit;
-}
 .subscribe input[type="email"] {
+  width: 100%;
   padding: 0.5rem;
   margin-bottom: 0.5rem;
+  font-family: inherit;
 }
 .subscribe button {
+  width: 100%;
   padding: 0.6rem;
   background: #222;
   color: #fff;
@@ -124,16 +140,16 @@ img.hero {
   border-radius: 6px;
 }
 
-/* Dark Mode overrides */
+/* Dark Mode */
 body.dark-mode {
   background: #111;
   color: #fdfaf5;
 }
 body.dark-mode a {
+  color: inherit;
   text-decoration: underline;
 }
-body.dark-mode header,
-body.dark-mode footer {
+body.dark-mode header, body.dark-mode footer {
   border-bottom: 1px solid #555;
 }
 body.dark-mode .subscribe button {
@@ -141,17 +157,70 @@ body.dark-mode .subscribe button {
   color: #111;
 }
 
-/* Mobile tweaks */
-@media (max-width: 480px) {
-  header { padding: 1rem; }
-  .logo-and-title { gap: 0.5rem; }
-  nav {
-    gap: 1rem;
+/* Dark mode toggle button */
+.dark-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: #222;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: inherit;
+  transition: background 0.3s;
+  z-index: 999;
+}
+.dark-toggle:hover {
+  background: #444;
+}
+
+/* Restore header centering on wider screens */
+@media (min-width: 600px) {
+  header {
+    display: block;
+    text-align: center;
+  }
+  header nav {
     margin-top: 1rem;
   }
-  nav a, .dark-toggle {
-    font-size: 1.2rem;
+}
+
+/* ─── Mobile adjustments ─── */
+@media (max-width: 480px) {
+  /* tighten header padding so the big logo/title stay visible */
+  header {
+    padding: 1rem;
   }
-  main { flex-direction: column; }
-  .post { margin-bottom: 1.5rem; }
+
+  /* keep logo+title at current large size, but reduce their gap */
+  .logo-and-title {
+    gap: 0.5rem;
+  }
+
+  /* allow nav links to wrap into two rows */
+  header nav {
+    flex-wrap: wrap;
+    gap: 1rem;        /* a bit less space between items */
+    margin-top: 1rem; /* pull it up slightly under the title */
+  }
+
+  /* slightly smaller nav text so links never break mid-word */
+  header nav a {
+    font-size: 1.2rem; /* down from 1.5rem */
+  }
+
+  /* stack posts and sidebar vertically */
+  main {
+    flex-direction: column;
+  }
+  .posts, .sidebar {
+    width: 100%;
+  }
+
+  /* tighten up spacing between posts on mobile */
+  .post {
+    margin-bottom: 1.5rem;
+  }
 }
