@@ -8,7 +8,12 @@
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-  <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+  {!-- desktop-only toggle button in the top-right --}
+  <button
+    class="dark-toggle desktop-only"
+    onclick="toggleDarkMode()"
+    aria-label="Toggle dark mode"
+  >🌙</button>
 
   <header>
     <div class="logo-and-title">
@@ -20,11 +25,19 @@
       <h1>Reflections</h1>
     </div>
     <nav>
-      <a href="/index.html" class="{% if page.url == '/index.html' %}active{% endif %}">Home</a>
-      <a href="/about.html" class="{% if page.url == '/about.html' %}active{% endif %}">About</a>
-      <a href="/posts.html" class="{% if page.url == '/posts.html' %}active{% endif %}">Posts</a>
-      {#<a href="/tags.html" class="{% if page.url == '/tags.html' %}active{% endif %}">Tags</a>#} {# ——— Tags link temporarily commented out. To re-enable, simply remove the {# and #}
+      <a href="/index.html"     class="{% if page.url == '/index.html'     %}active{% endif %}">Home</a>
+      <a href="/about.html"     class="{% if page.url == '/about.html'     %}active{% endif %}">About</a>
+      <a href="/posts.html"     class="{% if page.url == '/posts.html'     %}active{% endif %}">Posts</a>
+      {# Tags link temporarily commented out #}
+      {# <a href="/tags.html" class="{% if page.url == '/tags.html' %}active{% endif %}">Tags</a> #}
       <a href="/newsletter.html" class="{% if page.url == '/newsletter.html' %}active{% endif %}">Newsletter</a>
+
+      {!-- mobile-only toggle button at end of nav --}
+      <button
+        class="dark-toggle mobile-only"
+        onclick="toggleDarkMode()"
+        aria-label="Toggle dark mode"
+      >🌙</button>
     </nav>
   </header>
 
