@@ -11,12 +11,13 @@ body {
 /* Make all links inherit color by default (normal mode) */
 a {
   color: inherit;
-  text-decoration: underline;
+  text-decoration: underline; /* optional, keeps links visible */
 }
 
 /* ————————— header & footer padding ↑50% ————————— */
 header, footer {
-  padding: 3rem;              /* was 2rem */
+  /* was 2rem; now 2rem × 1.5 = 3rem */
+  padding: 3rem;
   text-align: center;
   border-bottom: 1px solid #ddd;
 }
@@ -28,39 +29,37 @@ header, footer {
   justify-content: center;
   gap: 0.75rem;
 }
+
+/* — site-logo height ↑50% — */
 .site-logo {
-  height: 3.75rem;            /* was 2.5rem */
+  /* was 2.5rem; now 2.5rem × 1.5 = 3.75rem */
+  height: 3.75rem;
   width: auto;
 }
+
+/* — main title font-size ↑50% — */
 header h1 {
-  font-size: 3.75rem;         /* was 2.5rem */
+  /* was 2.5rem; now 2.5rem × 1.5 = 3.75rem */
+  font-size: 3.75rem;
   margin: 0;
 }
 
 nav {
   display: flex;
   justify-content: center;
-  gap: 3rem;                  /* was 2rem */
-  margin-top: 1.5rem;         /* was 1rem */
+  /* — space between links ↑50% — */
+  gap: 3rem;          /* was 2rem; now 2rem × 1.5 */
+  /* — distance from title ↑50% — */
+  margin-top: 1.5rem; /* was 1rem; now 1rem × 1.5 */
   flex-wrap: wrap;
 }
+
+/* — nav link text ↑50% — */
 nav a {
   text-decoration: none;
-  font-size: 1.5rem;          /* was 1rem */
+  font-size: 1.5rem; /* was 1rem; now 1rem × 1.5 */
 }
 
-/* — inline “link” style for the toggle button — */
-.dark-toggle {
-  background: none;
-  border: none;
-  color: inherit;
-  cursor: pointer;
-  font-size: 1.5rem;   /* match the nav links */
-  margin-left: 1rem;
-  padding: 0;
-}
-
-/* Main layout */
 main {
   display: flex;
   flex-wrap: wrap;
@@ -69,15 +68,21 @@ main {
   gap: 2rem;
   padding: 0 1rem;
 }
-.posts { flex: 3 1 100%; }
-.sidebar { flex: 1 1 100%; }
-
+.posts {
+  flex: 3 1 100%;
+}
+.sidebar {
+  flex: 1 1 100%;
+}
 @media (min-width: 768px) {
-  .posts { flex: 3 1 0%; }
-  .sidebar { flex: 1 1 0%; }
+  .posts {
+    flex: 3 1 0%;
+  }
+  .sidebar {
+    flex: 1 1 0%;
+  }
 }
 
-/* Posts styling */
 .post {
   margin-bottom: 2.5rem;
 }
@@ -94,8 +99,9 @@ main {
   font-size: 1.1rem;
 }
 
-/* Sidebar tags */
-.sidebar h3 { margin-top: 0; }
+.sidebar h3 {
+  margin-top: 0;
+}
 .tags a {
   display: inline-block;
   margin: 0.2rem;
@@ -106,7 +112,6 @@ main {
   font-size: 0.9rem;
 }
 
-/* Subscribe form */
 .subscribe input[type="email"] {
   width: 100%;
   padding: 0.5rem;
@@ -128,7 +133,6 @@ main {
   transform: scale(1.05);
 }
 
-/* Hero image */
 img.hero {
   width: 100%;
   height: auto;
@@ -145,8 +149,7 @@ body.dark-mode a {
   color: inherit;
   text-decoration: underline;
 }
-body.dark-mode header,
-body.dark-mode footer {
+body.dark-mode header, body.dark-mode footer {
   border-bottom: 1px solid #555;
 }
 body.dark-mode .subscribe button {
@@ -154,23 +157,70 @@ body.dark-mode .subscribe button {
   color: #111;
 }
 
+/* Dark mode toggle button */
+.dark-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: #222;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: inherit;
+  transition: background 0.3s;
+  z-index: 999;
+}
+.dark-toggle:hover {
+  background: #444;
+}
+
 /* Restore header centering on wider screens */
 @media (min-width: 600px) {
-  header { display: block; text-align: center; }
-  header nav { margin-top: 1rem; }
+  header {
+    display: block;
+    text-align: center;
+  }
+  header nav {
+    margin-top: 1rem;
+  }
 }
 
 /* ─── Mobile adjustments ─── */
 @media (max-width: 480px) {
-  header { padding: 1rem; }
-  .logo-and-title { gap: 0.5rem; }
+  /* tighten header padding so the big logo/title stay visible */
+  header {
+    padding: 1rem;
+  }
+
+  /* keep logo+title at current large size, but reduce their gap */
+  .logo-and-title {
+    gap: 0.5rem;
+  }
+
+  /* allow nav links to wrap into two rows */
   header nav {
     flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: 1rem;        /* a bit less space between items */
+    margin-top: 1rem; /* pull it up slightly under the title */
   }
-  nav a, .dark-toggle { font-size: 1.2rem; }
-  main { flex-direction: column; }
-  .posts, .sidebar { width: 100%; }
-  .post { margin-bottom: 1.5rem; }
+
+  /* slightly smaller nav text so links never break mid-word */
+  header nav a {
+    font-size: 1.2rem; /* down from 1.5rem */
+  }
+
+  /* stack posts and sidebar vertically */
+  main {
+    flex-direction: column;
+  }
+  .posts, .sidebar {
+    width: 100%;
+  }
+
+  /* tighten up spacing between posts on mobile */
+  .post {
+    margin-bottom: 1.5rem;
+  }
 }
