@@ -8,18 +8,22 @@
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-  {# desktop-only toggle, will be hidden on mobile via CSS #}
-  <button class="dark-toggle">🌙</button>
+  <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
 
   <header>
     <div class="logo-and-title">
-      <img src="/images/uploads/logo.png" alt="Reflections logo" class="site-logo" />
+      <img
+        src="/images/uploads/logo.png"
+        alt="Reflections logo"
+        class="site-logo"
+      />
       <h1>Reflections</h1>
     </div>
     <nav>
       <a href="/index.html" class="{% if page.url == '/index.html' %}active{% endif %}">Home</a>
       <a href="/about.html" class="{% if page.url == '/about.html' %}active{% endif %}">About</a>
       <a href="/posts.html" class="{% if page.url == '/posts.html' %}active{% endif %}">Posts</a>
+      {#<a href="/tags.html" class="{% if page.url == '/tags.html' %}active{% endif %}">Tags</a>#} {# ——— Tags link temporarily commented out. To re-enable, simply remove the {# and #}
       <a href="/newsletter.html" class="{% if page.url == '/newsletter.html' %}active{% endif %}">Newsletter</a>
     </nav>
   </header>
@@ -33,19 +37,17 @@
   </footer>
 
   <script>
-    // Restore dark mode on load
     if (localStorage.getItem("dark-mode") === "enabled") {
       document.body.classList.add("dark-mode");
     }
-
-    // Toggle handler
-    document.querySelector('.dark-toggle').addEventListener('click', () => {
+    function toggleDarkMode() {
       document.body.classList.toggle("dark-mode");
-      localStorage.setItem(
-        "dark-mode",
-        document.body.classList.contains("dark-mode") ? "enabled" : "disabled"
-      );
-    });
+      if (document.body.classList.contains("dark-mode")) {
+        localStorage.setItem("dark-mode", "enabled");
+      } else {
+        localStorage.setItem("dark-mode", "disabled");
+      }
+    }
   </script>
 </body>
 </html>
