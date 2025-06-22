@@ -8,53 +8,59 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
-/* Make all links inherit color by default (normal mode) */
+/* Link defaults */
 a {
   color: inherit;
-  text-decoration: underline; /* optional */
+  text-decoration: underline;
 }
 
-/* —— header & footer padding ↑50% —— */
+/* Header & footer */
 header, footer {
-  padding: 3rem;           /* was 2rem */
+  padding: 2rem;
   text-align: center;
   border-bottom: 1px solid #ddd;
 }
 
-/* —— logo + title styling —— */
+/* —— logo + title —— */
 .logo-and-title {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
 }
-
-/* —— site-logo height ↑50% —— */
 .site-logo {
-  height: 3.75rem;         /* was 2.5rem */
+  height: 2.5rem;
   width: auto;
 }
-
-/* —— main title font-size ↑50% —— */
 header h1 {
-  font-size: 3.75rem;      /* was 2.5rem */
+  font-size: 2.5rem;
   margin: 0;
 }
 
+/* Nav bar */
 nav {
   display: flex;
   justify-content: center;
-  gap: 3rem;               /* was 2rem */
-  margin-top: 1.5rem;      /* was 1rem */
+  gap: 2rem;
+  margin-top: 1rem;
   flex-wrap: wrap;
 }
-
-/* —— nav link text ↑50% —— */
 nav a {
   text-decoration: none;
-  font-size: 1.5rem;       /* was 1rem */
+  font-size: 1rem;
 }
 
+/* — dark-mode toggle sits inline at end of nav — */
+.dark-toggle {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: inherit;
+  margin-left: 1rem;
+}
+
+/* Main + sidebar layout */
 main {
   display: flex;
   flex-wrap: wrap;
@@ -63,34 +69,20 @@ main {
   gap: 2rem;
   padding: 0 1rem;
 }
-
 .posts { flex: 3 1 100%; }
 .sidebar { flex: 1 1 100%; }
-
 @media (min-width: 768px) {
-  .posts  { flex: 3 1 0%; }
+  .posts { flex: 3 1 0%; }
   .sidebar { flex: 1 1 0%; }
 }
 
-.post {
-  margin-bottom: 2.5rem;
-}
-.post h2 {
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
-}
-.post p.meta {
-  color: #555;
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-}
-.post p.description {
-  font-size: 1.1rem;
-}
+/* Post styling */
+.post { margin-bottom: 2.5rem; }
+.post h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+.post p.meta { color: #555; font-size: 0.9rem; margin-bottom: 0.5rem; }
+.post p.description { font-size: 1.1rem; }
 
-.sidebar h3 {
-  margin-top: 0;
-}
+.sidebar h3 { margin-top: 0; }
 .tags a {
   display: inline-block;
   margin: 0.2rem;
@@ -101,14 +93,17 @@ main {
   font-size: 0.9rem;
 }
 
-.subscribe input[type="email"] {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-  font-family: inherit;
-}
+/* Subscribe form */
+.subscribe input[type="email"],
 .subscribe button {
   width: 100%;
+  font-family: inherit;
+}
+.subscribe input[type="email"] {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.subscribe button {
   padding: 0.6rem;
   background: #222;
   color: #fff;
@@ -129,13 +124,12 @@ img.hero {
   border-radius: 6px;
 }
 
-/* Dark Mode */
+/* Dark Mode overrides */
 body.dark-mode {
   background: #111;
   color: #fdfaf5;
 }
 body.dark-mode a {
-  color: inherit;
   text-decoration: underline;
 }
 body.dark-mode header,
@@ -147,77 +141,17 @@ body.dark-mode .subscribe button {
   color: #111;
 }
 
-/* desktop-only / mobile-only helpers */
-.desktop-only { display: inline-block; }
-.mobile-only  { display: none;        }
-
-/* Dark mode toggle button (default fixed top-right) */
-.dark-toggle {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  background: #222;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  border-radius: 4px;
-  font-family: inherit;
-  transition: background 0.3s;
-  z-index: 999;
-}
-.dark-toggle:hover {
-  background: #444;
-}
-
-/* Restore header centering on wider screens */
-@media (min-width: 600px) {
-  header { display: block; text-align: center; }
-  header nav { margin-top: 1rem; }
-}
-
-/* ─── Mobile adjustments ─── */
+/* Mobile tweaks */
 @media (max-width: 480px) {
-  /* hide the desktop-only toggle & show mobile one */
-  .desktop-only { display: none; }
-  .mobile-only {
-    display: inline-block;
-    margin-left: 1rem;
-    font-size: 1.2rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-
-  /* tighten header padding */
   header { padding: 1rem; }
-
-  /* smaller gap between logo & title */
   .logo-and-title { gap: 0.5rem; }
-
-  /* wrap nav items into two rows */
-  header nav {
-    flex-wrap: wrap;
+  nav {
     gap: 1rem;
     margin-top: 1rem;
-    align-items: center; /* vertically center the mobile toggle */
   }
-
-  /* slightly smaller nav text */
-  header nav a {
+  nav a, .dark-toggle {
     font-size: 1.2rem;
   }
-
-  /* stack posts + sidebar */
-  main {
-    flex-direction: column;
-  }
-  .posts, .sidebar {
-    width: 100%;
-  }
-
-  /* tighter spacing between posts */
-  .post {
-    margin-bottom: 1.5rem;
-  }
+  main { flex-direction: column; }
+  .post { margin-bottom: 1.5rem; }
 }
