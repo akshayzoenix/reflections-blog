@@ -11,6 +11,13 @@
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
+  {# — Fixed desktop toggle, hidden on mobile — #}
+  <button
+    class="dark-toggle desktop-toggle"
+    onclick="toggleDarkMode()"
+    aria-label="Toggle dark mode"
+  >🌙</button>
+
   <header>
     <div class="logo-and-title">
       <img
@@ -25,13 +32,17 @@
       <a href="/about.html" class="{% if page.url == '/about.html' %}active{% endif %}">About</a>
       <a href="/posts.html" class="{% if page.url == '/posts.html' %}active{% endif %}">Posts</a>
 
-      {# ── Tags link temporarily disabled. To re-enable, remove these two comment markers. ── #}
+      {# Tags link is commented out; to re-enable remove {# … #} #}
       {#<a href="/tags.html" class="{% if page.url == '/tags.html' %}active{% endif %}">Tags</a>#}
 
       <a href="/newsletter.html" class="{% if page.url == '/newsletter.html' %}active{% endif %}">Newsletter</a>
 
-      {# ── Dark-mode toggle cleanly sits at the end of the nav ── #}
-      <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+      {# — Inline mobile toggle, hidden on desktop — #}
+      <button
+        class="dark-toggle mobile-toggle"
+        onclick="toggleDarkMode()"
+        aria-label="Toggle dark mode"
+      >🌙</button>
     </nav>
   </header>
 
