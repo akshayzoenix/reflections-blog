@@ -146,7 +146,7 @@ body.dark-mode .subscribe button {
   color: #111;
 }
 
-/* Dark toggle shared base styles */
+/* Dark toggle shared styles */
 .dark-toggle {
   background: #222;
   color: #fff;
@@ -162,7 +162,7 @@ body.dark-mode .subscribe button {
   background: #444;
 }
 
-/* Desktop-only button (top-right fixed) */
+/* Desktop toggle (top right fixed) */
 .desktop-only {
   position: fixed;
   top: 1rem;
@@ -175,7 +175,7 @@ body.dark-mode .subscribe button {
   }
 }
 
-/* Mobile-only button (inline in nav) */
+/* Mobile toggle (inline inside nav) */
 .mobile-only {
   display: none;
 }
