@@ -9,8 +9,8 @@
 </head>
 <body>
 
-  <!-- Desktop toggle (fixed top-right) -->
-  <button class="dark-toggle desktop-only">🌙</button>
+  <!-- Desktop toggle (top-right) -->
+  <button class="dark-toggle desktop-only" aria-label="Toggle dark mode">🌙</button>
 
   <header>
     <div class="logo-and-title">
@@ -26,8 +26,7 @@
       <a href="/about.html" class="{% if page.url == '/about.html' %}active{% endif %}">About</a>
       <a href="/posts.html" class="{% if page.url == '/posts.html' %}active{% endif %}">Posts</a>
       <a href="/newsletter.html" class="{% if page.url == '/newsletter.html' %}active{% endif %}">Newsletter</a>
-      <!-- Mobile toggle (inline beside Newsletter) -->
-      <button class="dark-toggle mobile-only">🌙</button>
+      <button class="dark-toggle mobile-only" aria-label="Toggle dark mode">🌙</button>
     </nav>
   </header>
 
@@ -41,21 +40,21 @@
 
   <script>
     function applyDarkMode(state) {
-      if (state === "enabled") {
-        document.body.classList.add("dark-mode");
-      } else {
-        document.body.classList.remove("dark-mode");
-      }
+      const icon = state === 'enabled' ? '☀️' : '🌙';
+      document.body.classList.toggle('dark-mode', state === 'enabled');
+      document.querySelectorAll('.dark-toggle').forEach(btn => {
+        btn.textContent = icon;
+      });
     }
 
-    const savedMode = localStorage.getItem("dark-mode") || "disabled";
-    applyDarkMode(savedMode);
+    const saved = localStorage.getItem("dark-mode") || "disabled";
+    applyDarkMode(saved);
 
     function toggleDarkMode() {
-      const currentMode = document.body.classList.contains("dark-mode") ? "enabled" : "disabled";
-      const newMode = currentMode === "enabled" ? "disabled" : "enabled";
-      applyDarkMode(newMode);
-      localStorage.setItem("dark-mode", newMode);
+      const isDark = document.body.classList.contains("dark-mode");
+      const newState = isDark ? "disabled" : "enabled";
+      localStorage.setItem("dark-mode", newState);
+      applyDarkMode(newState);
     }
 
     document.querySelectorAll('.dark-toggle').forEach(btn => {
